@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node App",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "lib": [
+      "es5",
+      "es6"
+    ],
+    "isolatedModules": false,
+    "declaration": false,
+    "strictPropertyInitialization": false,
+    "target": "es6",
+    "module": "commonjs"
+  }
+}

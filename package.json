@@ -1,0 +1,53 @@
+{
+  "private": true,
+  "name": "lofhen-beer",
+  "version": "1.0.0",
+  "description": "Simple admin panel that I'm developing to help my dad in his day-to-day operations 🙂",
+  "main": "index.js",
+  "workspaces": {
+    "packages": [
+      "packages/**",
+      "apps/**"
+    ]
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darlanhms/lofhen-beer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darlanhms/lofhen-beer/issues"
+  },
+  "homepage": "https://github.com/darlanhms/lofhen-beer#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.41",
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "eslint": "7.32.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.2.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "4",
+    "git-commit-msg-linter": "^3.2.8",
+    "husky": "^7.0.4",
+    "jest": "^28.1.1",
+    "lint-staged": "^13.0.1",
+    "prettier": "^2.1.0",
+    "ts-jest": "^28.0.4",
+    "ts-node": "^10.8.1",
+    "ts-node-dev": "^2.0.0",
+    "turbo": "^1.2.16",
+    "typescript": "^4.7.3"
+  }
+}
