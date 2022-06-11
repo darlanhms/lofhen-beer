@@ -8,7 +8,7 @@ interface UserProps extends Omit<User, 'id' | 'password' | 'createdAt'> {
   hashedPassword?: boolean;
 }
 
-interface UserDTO {
+export interface UserDTO {
   name: string;
   username: string;
   role: Role;
@@ -82,5 +82,11 @@ export default class UserModel implements User {
     }
 
     this.password = await bcrypt.hash(this.password, 6);
+  }
+
+  async comparePassword(plainText: string): Promise<boolean> {
+    const matches = await bcrypt.compare(plainText, this.password);
+
+    return matches;
   }
 }

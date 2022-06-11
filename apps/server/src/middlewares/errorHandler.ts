@@ -1,11 +1,21 @@
+import RequestError from 'errors/requestError';
 import { NextFunction, Request, Response } from 'express';
+import { GenericRequestError, RequestErrorType } from 'types/requestErrors';
 
-type RequestError = Error;
+export const errorHandler = (
+  err: GenericRequestError,
+  req: Request,
+  res: Response,
+  _: NextFunction,
+): Response => {
+  if (err instanceof RequestError) {
+    return res.status(err.status).json(err.serialize());
+  }
 
-export const errorHandler = (err: RequestError, req: Request, res: Response, _: NextFunction): Response => {
   console.error('Unexpected error: ', err);
 
   return res.status(500).send({
-    errors: [{ message: 'Something unexpected occurred' }],
+    type: RequestErrorType.APPLICATION_ERROR,
+    message: 'Um erro inesperado aconteceu',
   });
 };
