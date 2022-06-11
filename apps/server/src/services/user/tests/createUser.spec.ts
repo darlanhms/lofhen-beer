@@ -8,6 +8,7 @@ import request from 'supertest';
 import { faker } from '@faker-js/faker';
 import { Role } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
+import NotAuthorizedError from 'errors/notAuthorizedError';
 import createUser, { CreateUserRequest } from '../createUser';
 
 function makeUserPayload(overrides?: Partial<CreateUserRequest>): CreateUserRequest {
@@ -71,6 +72,9 @@ describe('Create user', () => {
       .send(userPayload);
 
     expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    expect(response.body.message).toBe(new NotAuthorizedError().message);
+
     expect(responseWithAgentUser.status).toBe(StatusCodes.UNAUTHORIZED);
+    expect(responseWithAgentUser.body.message).toBe(new NotAuthorizedError().message);
   });
 });

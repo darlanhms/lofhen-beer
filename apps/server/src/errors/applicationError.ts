@@ -4,7 +4,7 @@ import RequestError from './requestError';
 export default abstract class ApplicationError extends RequestError {
   type = RequestErrorType.APPLICATION_ERROR;
 
-  constructor(private message: string) {
+  constructor(public message: string) {
     super();
   }
 
