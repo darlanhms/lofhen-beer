@@ -9,6 +9,7 @@ interface UserProps extends Omit<User, 'id' | 'password' | 'createdAt'> {
 }
 
 export interface UserDTO {
+  id: string;
   name: string;
   username: string;
   role: Role;
@@ -69,11 +70,31 @@ export default class UserModel implements User {
 
   toDTO(): UserDTO {
     return {
+      id: this.id,
       name: this.name,
       username: this.username,
       role: this.role,
       createdAt: this.createdAt,
     };
+  }
+
+  update(props?: Partial<UserProps>): void {
+    if (!props) {
+      return;
+    }
+
+    if (props.name) {
+      this.name = props.name;
+    }
+
+    if (props.username) {
+      this.username = props.username;
+    }
+
+    if (props.password) {
+      this.password = props.password;
+      this.hashedPassword = false;
+    }
   }
 
   async hashPassword(): Promise<void> {

@@ -5,6 +5,7 @@ import ensureAdmin from 'middlewares/ensureAdmin';
 import { validateRequest } from 'middlewares/validateRequest';
 import createUser from 'services/user/createUser';
 import login from 'services/user/login';
+import updateUser from 'services/user/updateUser';
 
 const userRouter = Router();
 
@@ -28,6 +29,14 @@ const userCreationValidations = [
     .withMessage('A senha deve ter no mínimo 4 caracteres e no máximo 20'),
 ];
 
+const userUpdateValidations = [
+  body('password')
+    .optional()
+    .trim()
+    .isLength({ min: 4, max: 20 })
+    .withMessage('A senha deve ter no mínimo 4 caracteres e no máximo 20'),
+];
+
 userRouter.post(
   '/',
   currentUser,
@@ -38,6 +47,22 @@ userRouter.post(
     const user = await createUser(req.body);
 
     return res.json(user.toDTO());
+  },
+);
+
+userRouter.put(
+  '/:id',
+  currentUser,
+  ensureAdmin,
+  ...userUpdateValidations,
+  validateRequest,
+  async (req, res) => {
+    await updateUser({
+      id: req.params.id,
+      ...req.body,
+    });
+
+    return res.status(200).send();
   },
 );
 
