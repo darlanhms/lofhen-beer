@@ -26,7 +26,7 @@ export default async function login({ username, password }: LoginRequest): Promi
 
   const user = UserModel.toModel(userInDb);
 
-  const passwordMatches = user.comparePassword(password);
+  const passwordMatches = await user.comparePassword(password);
 
   if (!passwordMatches) {
     throw new BadRequestError('Credenciais inválidas');
