@@ -3,7 +3,7 @@ import prisma from 'client';
 import BadRequestError from 'errors/badRequestError';
 import UserModel from 'models/user';
 
-interface CreateUserRequest {
+export interface CreateUserRequest {
   name: string;
   username: string;
   password: string;
