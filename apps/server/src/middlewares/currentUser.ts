@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserDTO } from 'models/user';
+import { UserDTO } from 'type-utils';
 
 export function currentUser(req: Request, _: Response, next: NextFunction): void {
   if (!req.session?.jwt) {

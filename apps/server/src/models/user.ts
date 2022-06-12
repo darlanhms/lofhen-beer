@@ -1,19 +1,12 @@
 import { Role, User } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
+import { UserDTO } from 'type-utils';
 
 interface UserProps extends Omit<User, 'id' | 'password' | 'createdAt'> {
   password?: string;
   createdAt?: Date;
   hashedPassword?: boolean;
-}
-
-export interface UserDTO {
-  id: string;
-  name: string;
-  username: string;
-  role: Role;
-  createdAt: Date;
 }
 
 export default class UserModel implements User {

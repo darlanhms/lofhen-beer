@@ -1,4 +1,4 @@
-import { UserDTO } from 'models/user';
+import { UserDTO } from 'type-utils';
 
 declare global {
   namespace Express {
