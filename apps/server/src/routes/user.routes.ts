@@ -78,6 +78,12 @@ userRouter.post('/login', ...loginValidations, validateRequest, async (req, res)
   });
 });
 
+userRouter.post('/logout', async (req, res) => {
+  req.session = null;
+
+  return res.status(200).send();
+});
+
 userRouter.get('/current-user', currentUser, async (req, res) => {
   if (!req.user?.id) {
     return res.json({ user: null });
