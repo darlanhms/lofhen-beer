@@ -77,4 +77,8 @@ userRouter.post('/login', ...loginValidations, validateRequest, async (req, res)
   });
 });
 
+userRouter.get('/current-user', currentUser, async (req, res) => {
+  return res.json({ user: req.user });
+});
+
 export default userRouter;
