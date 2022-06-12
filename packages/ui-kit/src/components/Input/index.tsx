@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IconButton, InputAdornment, TextField, TextFieldProps, Typography } from '@mui/material';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -19,8 +19,9 @@ export const Input = ({
   autoFocus,
   ...rest
 }: InputProps & TextFieldProps): React.ReactElement => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [shrink] = useState<boolean>(!!defaultValue || !!autoFocus);
+  const [shrink, setShrink] = useState<boolean>(!!defaultValue || !!autoFocus);
 
   const passwordInputType = showPassword ? 'text' : 'password';
 
@@ -56,6 +57,32 @@ export const Input = ({
       );
     }
   }
+
+  useEffect(() => {
+    const input = inputRef.current;
+
+    function handlerFocusEvent(evt: FocusEvent) {
+      const inputValue = (evt.currentTarget as HTMLInputElement).value;
+      if (!inputValue) setShrink(true);
+    }
+
+    function handlerBlurEvent(evt: FocusEvent) {
+      const inputValue = (evt.target as HTMLInputElement).value;
+      if (!inputValue) setShrink(false);
+    }
+
+    if (input) {
+      input.addEventListener('focus', handlerFocusEvent);
+      input.addEventListener('blur', handlerBlurEvent);
+    }
+
+    return () => {
+      if (input) {
+        input.removeEventListener('focus', handlerFocusEvent);
+        input.removeEventListener('blur', handlerBlurEvent);
+      }
+    };
+  }, [inputRef]);
 
   return (
     <>
