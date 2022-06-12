@@ -1,8 +1,9 @@
 import { GetServerSideProps, NextPage } from 'next';
 import apiClient from 'services/api';
+import { Input } from 'ui-kit';
 
 const Login: NextPage = () => {
-  return <h1>Login</h1>;
+  return <Input name="Test" label="Nome de usuário" type="password" />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
