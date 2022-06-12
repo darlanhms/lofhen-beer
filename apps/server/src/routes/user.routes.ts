@@ -1,3 +1,4 @@
+import prisma from 'client';
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { currentUser } from 'middlewares/currentUser';
@@ -78,7 +79,17 @@ userRouter.post('/login', ...loginValidations, validateRequest, async (req, res)
 });
 
 userRouter.get('/current-user', currentUser, async (req, res) => {
-  return res.json({ user: req.user });
+  if (!req.user?.id) {
+    return res.json({ user: null });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user?.id,
+    },
+  });
+
+  return res.json({ user: { ...user, password: undefined } });
 });
 
 export default userRouter;
