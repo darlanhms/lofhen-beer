@@ -10,6 +10,7 @@ import FormInput from 'components/Form/FormInput';
 import { useMutation } from 'react-query';
 import { useAlert } from '@lofhen/ui-kit';
 import { formatErrorMessage } from '@lofhen/utils';
+import Router from 'next/router';
 
 const loginSchema = yup
   .object({
@@ -31,11 +32,16 @@ const Login: NextPage = () => {
 
   const loginMutation = useMutation(
     async (data: any) => {
-      return apiClient.post('/users/login', data);
+      return apiClient.post('/users/login', data, {
+        withCredentials: true,
+      });
     },
     {
       onError: error => {
         errorAlert(formatErrorMessage(error));
+      },
+      onSuccess: () => {
+        Router.push('/admin');
       },
     },
   );
@@ -73,15 +79,20 @@ const Login: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
     const {
       data: { user },
-    } = await apiClient.get('/users/current-user');
+    } = await apiClient.get('/users/current-user', {
+      headers: req.headers as any,
+    });
 
     if (user) {
       return {
-        redirect: '/admin',
+        redirect: {
+          destination: '/admin',
+          permanent: false,
+        },
         props: {},
       };
     }
