@@ -1,4 +1,4 @@
-import { UserDTO } from 'type-utils';
+import { UserDTO } from '@lofhen/types';
 
 declare global {
   namespace Express {

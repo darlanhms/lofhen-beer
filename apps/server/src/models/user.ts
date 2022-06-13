@@ -1,7 +1,7 @@
 import { Role, User } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
-import { UserDTO } from 'type-utils';
+import { UserDTO } from '@lofhen/types';
 
 interface UserProps extends Omit<User, 'id' | 'password' | 'createdAt'> {
   password?: string;

@@ -14,6 +14,9 @@ export function TextFieldOverride(): Components {
         root: {
           lineHeight: '16px',
         },
+        shrink: {
+          lineHeight: '12px',
+        },
       },
     },
   };

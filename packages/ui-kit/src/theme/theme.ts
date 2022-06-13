@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+import ButtonOverride from './overrides/Button';
 import { TextFieldOverride } from './overrides/TextField';
 
 function pxToRem(value: number): string {
@@ -107,6 +108,7 @@ const theme = createTheme({
 
 theme.components = {
   ...TextFieldOverride(),
+  ...ButtonOverride(theme),
 };
 
 export default theme;

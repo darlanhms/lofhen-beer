@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { IconButton, InputAdornment, TextField, TextFieldProps, Typography } from '@mui/material';
+import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 type AdornmentPositions = 'start' | 'end';
 
-export interface InputProps {
+interface SpecificProps {
   errorMessage?: string;
   adornmentPosition?: AdornmentPositions;
   adornmentIcon?: React.ReactNode;
 }
+
+export type InputProps = SpecificProps & TextFieldProps;
 
 export const Input = ({
   errorMessage,
@@ -18,7 +20,7 @@ export const Input = ({
   defaultValue,
   autoFocus,
   ...rest
-}: InputProps & TextFieldProps): React.ReactElement => {
+}: InputProps): React.ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [shrink, setShrink] = useState<boolean>(!!defaultValue || !!autoFocus);
@@ -92,16 +94,10 @@ export const Input = ({
         InputLabelProps={{ shrink, ...rest.InputLabelProps }}
         autoComplete="on"
         type={type === 'password' ? passwordInputType : type}
+        helperText={errorMessage || ' '}
         {...rest}
-        InputProps={{ ...rest.InputProps, [adornmentPositionKey]: adornment }}
+        InputProps={{ ...rest.InputProps, [adornmentPositionKey]: adornment, inputRef }}
       />
-      {errorMessage ? (
-        <Typography color="error" variant="subtitle2">
-          {errorMessage}
-        </Typography>
-      ) : (
-        <Typography />
-      )}
     </>
   );
 };

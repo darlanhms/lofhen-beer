@@ -1,5 +1,5 @@
 {
-  "name": "ui-kit",
+  "name": "@lofhen/ui-kit",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "copyfiles": "^2.4.1",
+    "notistack": "^2.0.5",
     "react-icons": "^4.4.0"
   },
   "peerDependencies": {
