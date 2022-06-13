@@ -10,14 +10,14 @@ const globalStyles: Interpolation<Theme> = {
   '#__next': {
     width: '100%',
     height: '100%',
-    '-ms-text-size-adjust': '100%',
-    '-webkit-overflow-scrolling': 'touch',
+    msTextSizeAdjust: '100%',
+    webkitOverflowScrolling: 'touch',
   },
   html: {
     width: '100%',
     height: '100%',
-    '-ms-text-size-adjust': '100%',
-    '-webkit-overflow-scrolling': 'touch',
+    msTextSizeAdjust: '100%',
+    webkitOverflowScrolling: 'touch',
   },
   body: {
     width: '100%',

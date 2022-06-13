@@ -19,6 +19,7 @@ app.use(
 app.use(
   cookieSession({
     signed: false,
+    httpOnly: false,
   }),
 );
 
