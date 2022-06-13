@@ -61,6 +61,11 @@ const routes: Array<IRoute> = [
     label: 'Início',
     Icon: FaHome,
   },
+  {
+    path: '/admin/users',
+    label: 'Usuários',
+    Icon: FaUser,
+  },
 ];
 
 interface SingleRouteProps {
