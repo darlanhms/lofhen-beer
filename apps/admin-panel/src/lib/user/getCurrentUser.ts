@@ -4,9 +4,7 @@ import apiClient from 'services/api';
 export async function getCurrentUser(): Promise<UserDTO | null> {
   const {
     data: { user },
-  } = await apiClient.get('/users/current-user', {
-    withCredentials: true,
-  });
+  } = await apiClient.get('/users/current-user');
 
   return user;
 }

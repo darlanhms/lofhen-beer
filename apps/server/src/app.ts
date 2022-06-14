@@ -8,10 +8,25 @@ import cookieSession from 'cookie-session';
 
 const app = express();
 
+app.set('trust proxy', true);
+
+const whitelist = ['https://lofhen-local.com:3001', 'https://192.168.2.54:3001'];
+
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: (origin, callback) => {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      if (whitelist.indexOf(origin as string) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   }),
 );
@@ -19,6 +34,8 @@ app.use(
 app.use(
   cookieSession({
     signed: false,
+    sameSite: 'none',
+    secure: true,
     httpOnly: false,
   }),
 );

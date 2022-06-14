@@ -11,6 +11,7 @@ import { useMutation } from 'react-query';
 import { useAlert } from '@lofhen/ui-kit';
 import { formatErrorMessage } from '@lofhen/utils';
 import Router from 'next/router';
+import PageMetadata from 'components/PageMetadata';
 
 const loginSchema = yup
   .object({
@@ -52,6 +53,7 @@ const Login: NextPage = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <PageMetadata title="Login" />
       <Container
         maxWidth="sm"
         sx={{

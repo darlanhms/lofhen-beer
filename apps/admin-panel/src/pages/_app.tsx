@@ -3,7 +3,7 @@ import { ThemeProvider } from '@lofhen/ui-kit';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { CustomPage } from 'types/customPage';
 import React from 'react';
-import { SidebarProvider } from 'hooks/userSidebar';
+import { SidebarProvider } from 'hooks/useSidebar';
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "copyfiles": "^2.4.1",
+    "dot-object": "^2.1.4",
     "notistack": "^2.0.5",
     "react-icons": "^4.4.0"
   },
@@ -22,5 +23,8 @@
     "@mui/material": "^5.8.3",
     "react": "18.0.12",
     "react-dom": "18.0.5"
+  },
+  "devDependencies": {
+    "@types/dot-object": "^2.1.2"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "Next app": {
+    "source": 3333,
+    "target": 3332
+  },
+  "Another proxy": {
+    "source": 3001,
+    "target": 3000
+  }
+}

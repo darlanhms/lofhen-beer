@@ -4,6 +4,7 @@ import { body } from 'express-validator';
 import { currentUser } from 'middlewares/currentUser';
 import ensureAdmin from 'middlewares/ensureAdmin';
 import { validateRequest } from 'middlewares/validateRequest';
+import UserModel from 'models/user';
 import createUser from 'services/user/createUser';
 import login from 'services/user/login';
 import updateUser from 'services/user/updateUser';
@@ -66,6 +67,14 @@ userRouter.put(
     return res.status(200).send();
   },
 );
+
+userRouter.get('/', currentUser, ensureAdmin, async (req, res) => {
+  const users = await prisma.user.findMany({});
+
+  const userModels = users.map(UserModel.toModel);
+
+  return res.json(userModels.map(model => model.toDTO()));
+});
 
 userRouter.post('/login', ...loginValidations, validateRequest, async (req, res) => {
   const { user, jwt } = await login(req.body);

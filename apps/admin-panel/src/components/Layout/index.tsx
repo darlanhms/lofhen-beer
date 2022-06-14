@@ -18,10 +18,10 @@ import { IconType } from 'react-icons';
 import { FaChevronDown, FaChevronUp, FaHome, FaUser } from 'react-icons/fa';
 import { AiOutlineMenu } from 'react-icons/ai';
 
-import useSidebar from 'hooks/userSidebar';
+import useSidebar from 'hooks/useSidebar';
 import bannerImg from 'assets/images/banner.png';
 
-import useUser from 'hooks/userUser';
+import useUser from 'hooks/useUser';
 import {
   DrawerContentBox,
   DrawerOption,

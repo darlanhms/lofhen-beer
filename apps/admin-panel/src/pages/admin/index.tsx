@@ -1,8 +1,9 @@
 import Layout from 'components/Layout';
+import PageMetadata from 'components/PageMetadata';
 import { CustomPage } from 'types/customPage';
 
 const AdminHome: CustomPage = () => {
-  return <h1>Hello admin</h1>;
+  return <PageMetadata title="Administração" />;
 };
 
 AdminHome.layout = Layout;
