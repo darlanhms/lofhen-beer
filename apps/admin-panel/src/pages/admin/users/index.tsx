@@ -91,7 +91,7 @@ const UsersPage: CustomPage = () => {
         singleSelectedToolbar={
           <FlexAlignRight>
             <Tooltip title="Editar" sx={{ mr: 1 }}>
-              <IconButton onClick={() => Router.push(`/admin/users/update/${selected}`)}>
+              <IconButton onClick={() => Router.push(`/admin/users/${selected}`)}>
                 <FaPencilAlt size="20" />
               </IconButton>
             </Tooltip>

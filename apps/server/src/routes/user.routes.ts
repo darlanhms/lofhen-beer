@@ -76,6 +76,36 @@ userRouter.get('/', currentUser, ensureAdmin, async (req, res) => {
   return res.json(userModels.map(model => model.toDTO()));
 });
 
+userRouter.get('/current-user', currentUser, async (req, res) => {
+  if (!req.user?.id) {
+    return res.json({ user: null });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user?.id,
+    },
+  });
+
+  return res.json({ user: { ...user, password: undefined } });
+});
+
+userRouter.get('/:id', currentUser, ensureAdmin, async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.params.id,
+    },
+  });
+
+  if (!user) {
+    return res.json(null);
+  }
+
+  const userModel = UserModel.toModel(user);
+
+  return res.json(userModel.toDTO());
+});
+
 userRouter.post('/login', ...loginValidations, validateRequest, async (req, res) => {
   const { user, jwt } = await login(req.body);
 
@@ -91,20 +121,6 @@ userRouter.post('/logout', async (req, res) => {
   req.session = null;
 
   return res.status(200).send();
-});
-
-userRouter.get('/current-user', currentUser, async (req, res) => {
-  if (!req.user?.id) {
-    return res.json({ user: null });
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: req.user?.id,
-    },
-  });
-
-  return res.json({ user: { ...user, password: undefined } });
 });
 
 export default userRouter;

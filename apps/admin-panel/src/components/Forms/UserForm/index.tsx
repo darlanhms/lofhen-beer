@@ -5,27 +5,29 @@ import FormSelect from 'components/Form/FormSelect';
 import { Role } from '@lofhen/types';
 import { BaseFormProps } from '../baseFormProps';
 
-const UserForm = ({ onSubmit, control, loading }: BaseFormProps): React.ReactElement => {
+const UserForm = ({ onSubmit, control, loading, watch, isUpdating }: BaseFormProps): React.ReactElement => {
   return (
     <form onSubmit={onSubmit}>
       <Stack spacing={1}>
-        <FormInput name="name" label="Nome" control={control} />
-        <FormInput name="username" label="Nome de usuário" control={control} />
-        <FormSelect
-          name="role"
-          control={control}
-          label="Cargo"
-          options={[
-            {
-              label: 'Administrador',
-              value: Role.ADMIN,
-            },
-            {
-              label: 'Representante',
-              value: Role.AGENT,
-            },
-          ]}
-        />
+        <FormInput name="name" label="Nome" control={control} watch={watch} />
+        <FormInput name="username" label="Nome de usuário" control={control} watch={watch} />
+        {!isUpdating && (
+          <FormSelect
+            name="role"
+            control={control}
+            label="Cargo"
+            options={[
+              {
+                label: 'Administrador',
+                value: Role.ADMIN,
+              },
+              {
+                label: 'Representante',
+                value: Role.AGENT,
+              },
+            ]}
+          />
+        )}
         <FormInput name="password" label="Senha" type="password" control={control} />
 
         <AlginRightBox>
