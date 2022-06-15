@@ -2,7 +2,7 @@ import { Container } from '@mui/system';
 import Layout from 'components/Layout';
 import PageMetadata from 'components/PageMetadata';
 import { CustomPage } from 'types/customPage';
-import { DataTable, FlexAlignRight, Input, useAlert, useTableSelection } from '@lofhen/ui-kit';
+import { DataTable, FlexAlignRight, Input, useAlert, useArrayQuery, useTableSelection } from '@lofhen/ui-kit';
 import { Role, UserDTO } from '@lofhen/types';
 import { FaPencilAlt, FaPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
 import HeaderTitle from 'components/HeaderTitle';
@@ -40,16 +40,14 @@ const UsersPage: CustomPage = () => {
     },
   );
 
-  // const [filteredUsers, handleSearch] = useArrayQuery(data || [], ['username', 'name', 'role']);
+  const [filteredUsers, handleSearch] = useArrayQuery(data || [], ['username', 'name', 'role']);
 
   const users = useMemo(() => {
-    return (
-      data?.map(user => ({
-        ...user,
-        role: getUserRoleLabel(user),
-      })) || []
-    );
-  }, [data]);
+    return filteredUsers.map(user => ({
+      ...user,
+      role: getUserRoleLabel(user),
+    }));
+  }, [filteredUsers]);
 
   return (
     <Container maxWidth="xl">
@@ -83,6 +81,7 @@ const UsersPage: CustomPage = () => {
             <Input
               placeholder="Pesquisar"
               sx={{ mt: 2 }}
+              onChange={e => handleSearch(e.target.value)}
               adornmentIcon={<FaSearch size={18} />}
               adornmentPosition="end"
               fullWidth={false}

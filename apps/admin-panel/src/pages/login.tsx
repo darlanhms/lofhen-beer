@@ -16,11 +16,7 @@ import PageMetadata from 'components/PageMetadata';
 const loginSchema = yup
   .object({
     username: yup.string().required('Informe um nome de usuário'),
-    password: yup
-      .string()
-      .required('Informe a senha')
-      .min(4, 'Mínimo 4 caracteres')
-      .max(20, 'Máximo 20 caracteres'),
+    password: yup.string().required('Informe a senha'),
   })
   .required();
 

@@ -1,17 +1,17 @@
+import { Select, SelectProps } from '@lofhen/ui-kit';
 import { Controller } from 'react-hook-form';
-import { Input, InputProps } from '@lofhen/ui-kit';
 import { BaseFormInputProps } from '../baseFormInputProps';
 
-const FormInput = ({ name, control, ...rest }: BaseFormInputProps & InputProps): React.ReactElement => {
+const FormSelect: React.FC<BaseFormInputProps & SelectProps> = ({ name, control, ...rest }) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <Input errorMessage={error?.message} {...rest} {...field} />
+        <Select errorMessage={error?.message} {...field} {...rest} />
       )}
     />
   );
 };
 
-export default FormInput;
+export default FormSelect;
