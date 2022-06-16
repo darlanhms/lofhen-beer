@@ -26,3 +26,10 @@ enum Role {
   ADMIN
   AGENT
 }
+
+model State {
+  id   String @id @default(uuid()) @db.Uuid
+  name String @db.VarChar(255)
+
+  @@map("state")
+}
