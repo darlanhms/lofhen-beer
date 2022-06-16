@@ -3,13 +3,13 @@ import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { UserDTO } from '@lofhen/types';
 
-interface UserProps extends Omit<User, 'id' | 'password' | 'createdAt'> {
+interface UserProps extends Omit<User, 'id' | 'password' | 'createdAt' | 'deleted'> {
   password?: string;
   createdAt?: Date;
   hashedPassword?: boolean;
 }
 
-export default class UserModel implements User {
+export default class UserModel implements Omit<User, 'deleted'> {
   public readonly id: string;
 
   name: string;
@@ -58,6 +58,7 @@ export default class UserModel implements User {
       password: this.password,
       role: this.role,
       createdAt: this.createdAt,
+      deleted: false,
     };
   }
 

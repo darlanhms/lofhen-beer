@@ -33,7 +33,7 @@ describe('Create user', () => {
 
     const response = await request(app).post('/api/users').set('Cookie', cookies).send(userPayload);
 
-    const userInDb = await prisma.user.findUnique({
+    const userInDb = await prisma.user.findFirst({
       where: {
         username: userPayload.username,
       },

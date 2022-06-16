@@ -14,7 +14,10 @@ prisma.$use(async (params, next) => {
       params.action = 'findFirst';
       // Add 'deleted' filter
       // ID filter maintained
-      params.args.where.deleted = false;
+      if (params.args.where.deleted === undefined) {
+        // Exclude deleted records if they have not been explicitly requested
+        params.args.where.deleted = false;
+      }
     }
     if (params.action === 'findMany') {
       // Find many queries

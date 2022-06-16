@@ -6,6 +6,7 @@ import ensureAdmin from 'middlewares/ensureAdmin';
 import { validateRequest } from 'middlewares/validateRequest';
 import UserModel from 'models/user';
 import createUser from 'services/user/createUser';
+import deleteUser from 'services/user/deleteUser';
 import login from 'services/user/login';
 import updateUser from 'services/user/updateUser';
 
@@ -107,11 +108,7 @@ userRouter.get('/:id', currentUser, ensureAdmin, async (req, res) => {
 });
 
 userRouter.delete('/:id', currentUser, ensureAdmin, async (req, res) => {
-  await prisma.user.delete({
-    where: {
-      id: req.params.id,
-    },
-  });
+  await deleteUser(req.params.id);
 
   return res.status(200).send();
 });

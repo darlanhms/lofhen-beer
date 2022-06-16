@@ -6,6 +6,8 @@ import router from 'routes';
 import { errorHandler } from 'middlewares/errorHandler';
 import cookieSession from 'cookie-session';
 
+import 'database/middleware';
+
 const app = express();
 
 app.set('trust proxy', true);
@@ -35,7 +37,7 @@ app.use(
   cookieSession({
     signed: false,
     sameSite: 'none',
-    secure: true,
+    secure: process.env.NODE_ENV !== 'test',
     httpOnly: false,
   }),
 );

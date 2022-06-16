@@ -11,7 +11,7 @@ export interface CreateUserRequest {
 }
 
 export default async function createUser(user: CreateUserRequest): Promise<UserModel> {
-  const alreadyRegisteredUser = await prisma.user.findUnique({
+  const alreadyRegisteredUser = await prisma.user.findFirst({
     where: {
       username: user.username,
     },

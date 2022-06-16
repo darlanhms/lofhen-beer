@@ -14,7 +14,7 @@ interface LoginResponse {
 }
 
 export default async function login({ username, password }: LoginRequest): Promise<LoginResponse> {
-  const userInDb = await prisma.user.findUnique({
+  const userInDb = await prisma.user.findFirst({
     where: {
       username,
     },
