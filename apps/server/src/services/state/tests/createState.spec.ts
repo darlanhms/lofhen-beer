@@ -7,7 +7,7 @@ import prisma from 'client';
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from 'http-status-codes';
-import { CreateStateRequest } from '../createState';
+import { createState, CreateStateRequest } from '../createState';
 
 function makeStatePayload(overrides?: Partial<CreateStateRequest>): CreateStateRequest {
   return {
@@ -37,5 +37,22 @@ describe('Create state', () => {
 
     expect(response.status).toBe(StatusCodes.OK);
     expect(stateInDb).toBeDefined();
+  });
+
+  it('returns an error if name was already registered', async () => {
+    const cookies = await authenticate();
+
+    const state = await createState({
+      name: faker.address.state(),
+      abbr: faker.address.stateAbbr(),
+    });
+
+    const response = await request(app)
+      .post('/api/states')
+      .set('Cookie', cookies)
+      .send(makeStatePayload({ name: state.name }));
+
+    expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    expect(response.body.message).toMatch('Estado com o mesmo nome já cadastrado');
   });
 });

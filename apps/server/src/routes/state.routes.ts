@@ -4,6 +4,7 @@ import { currentUser } from 'middlewares/currentUser';
 import ensureAdmin from 'middlewares/ensureAdmin';
 import { validateRequest } from 'middlewares/validateRequest';
 import { createState } from 'services/state/createState';
+import { updateState } from 'services/state/udpateState';
 
 const stateRouter = Router();
 
@@ -19,10 +20,15 @@ stateRouter.post(
   ...stateCreationValidations,
   validateRequest,
   async (req, res) => {
-    const state = createState(req.body);
+    const state = await createState(req.body);
 
     return res.json(state);
   },
 );
+stateRouter.put('/:id', currentUser, ensureAdmin, async (req, res) => {
+  const state = await updateState({ ...req.body, id: req.params.id });
+
+  return res.json(state);
+});
 
 export default stateRouter;
