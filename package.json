@@ -12,8 +12,9 @@
   },
   "scripts": {
     "dev": "turbo run dev --parallel",
-    "proxy": "local-ssl-proxy --config proxy-config.json",
+    "build": "turbo run build",
     "test": "turbo run test",
+    "proxy": "local-ssl-proxy --config proxy-config.json",
     "lint": "eslint . --fix --ext ts,tsx",
     "prepare": "husky install"
   },
