@@ -28,8 +28,19 @@ enum Role {
 }
 
 model State {
-  id   String @id @default(uuid()) @db.Uuid
-  name String @db.VarChar(255)
+  id     String @id @default(uuid()) @db.Uuid
+  name   String @db.VarChar(255) @unique
+  abbr   String @db.VarChar(10)
+  cities City[]
 
   @@map("state")
+}
+
+model City {
+  id      String @id @default(uuid()) @db.Uuid
+  name    String @db.VarChar(255) @unique
+  stateId String @map("state_id") @db.Uuid
+  state   State  @relation(fields: [stateId], references: [id])
+
+  @@map("city")
 }
