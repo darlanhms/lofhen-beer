@@ -4,6 +4,7 @@ import { currentUser } from 'middlewares/currentUser';
 import ensureAdmin from 'middlewares/ensureAdmin';
 import { validateRequest } from 'middlewares/validateRequest';
 import { createCity } from 'services/city/createCity';
+import { updateCity } from 'services/city/updateCity';
 
 const cityRouter = Router();
 
@@ -16,6 +17,12 @@ cityRouter.post('/', currentUser, ensureAdmin, ...createCityValidations, validat
   const city = await createCity(req.body);
 
   return res.json(city);
+});
+
+cityRouter.put('/:id', currentUser, ensureAdmin, async (req, res) => {
+  await updateCity({ ...req.body, id: req.params.id });
+
+  return res.status(200).send();
 });
 
 export default cityRouter;
