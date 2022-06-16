@@ -1,4 +1,5 @@
 import validateEnvironmentVariables from 'utils/validateEnvironmentVariables';
+import 'database/middleware';
 import app from './app';
 
 validateEnvironmentVariables();

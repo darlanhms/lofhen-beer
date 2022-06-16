@@ -106,6 +106,16 @@ userRouter.get('/:id', currentUser, ensureAdmin, async (req, res) => {
   return res.json(userModel.toDTO());
 });
 
+userRouter.delete('/:id', currentUser, ensureAdmin, async (req, res) => {
+  await prisma.user.delete({
+    where: {
+      id: req.params.id,
+    },
+  });
+
+  return res.status(200).send();
+});
+
 userRouter.post('/login', ...loginValidations, validateRequest, async (req, res) => {
   const { user, jwt } = await login(req.body);
 

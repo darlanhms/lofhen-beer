@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { Container } from '@mui/system';
 import Layout from 'components/Layout';
 import PageMetadata from 'components/PageMetadata';
@@ -6,12 +7,21 @@ import { DataTable, FlexAlignRight, Input, useAlert, useArrayQuery, useTableSele
 import { Role, UserDTO } from '@lofhen/types';
 import { FaPencilAlt, FaPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
 import HeaderTitle from 'components/HeaderTitle';
-import { Button, IconButton, Tooltip } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
 import Router from 'next/router';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getUsers } from 'lib/user/getUsers';
 import { formatErrorMessage } from '@lofhen/utils';
-import { useMemo } from 'react';
+import { deleteUser } from 'lib/user/deleteUser';
 
 const getUserRoleLabel = (user: UserDTO): string => {
   switch (user.role) {
@@ -26,7 +36,9 @@ const getUserRoleLabel = (user: UserDTO): string => {
 
 const UsersPage: CustomPage = () => {
   const [selected, setSelected] = useTableSelection('single');
+  const [modalOpen, setModalOpen] = useState(false);
   const { errorAlert } = useAlert();
+  const queryClient = useQueryClient();
 
   const { data } = useQuery(
     ['getUsers'],
@@ -40,6 +52,26 @@ const UsersPage: CustomPage = () => {
     },
   );
 
+  const deleteUserMutation = useMutation(
+    async () => {
+      if (selected) {
+        return deleteUser(selected);
+      }
+
+      return null;
+    },
+    {
+      onError: error => {
+        errorAlert(formatErrorMessage(error));
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getUsers']);
+        setModalOpen(false);
+        setSelected(undefined);
+      },
+    },
+  );
+
   const [filteredUsers, handleSearch] = useArrayQuery(data || [], ['username', 'name', 'role']);
 
   const users = useMemo(() => {
@@ -48,6 +80,14 @@ const UsersPage: CustomPage = () => {
       role: getUserRoleLabel(user),
     }));
   }, [filteredUsers]);
+
+  const getCurrentUser = (): UserDTO | undefined => {
+    return data?.find(user => user.id === selected);
+  };
+
+  const handleRemoveUser = () => {
+    deleteUserMutation.mutate();
+  };
 
   return (
     <Container maxWidth="xl">
@@ -96,13 +136,32 @@ const UsersPage: CustomPage = () => {
               </IconButton>
             </Tooltip>
             <Tooltip title="Remover">
-              <IconButton>
+              <IconButton onClick={() => setModalOpen(true)}>
                 <FaTrashAlt size="20" />
               </IconButton>
             </Tooltip>
           </FlexAlignRight>
         }
       />
+
+      <Dialog open={modalOpen} onClose={() => setModalOpen(false)}>
+        <DialogTitle>Confirmar exclusão</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Tem certeza que deseja remover o usuário <b>{getCurrentUser()?.name}</b>?
+            <br />
+            Essa ação não pode ser desfeita
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button color="error" onClick={() => setModalOpen(false)}>
+            Cancelar
+          </Button>
+          <Button color="success" onClick={handleRemoveUser} autoFocus>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
