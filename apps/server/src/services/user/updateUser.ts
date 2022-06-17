@@ -1,5 +1,5 @@
 import prisma from 'client';
-import UserModel from 'models/user';
+import * as bcrypt from 'bcrypt';
 
 interface UpdateUserRequest {
   id: string;
@@ -19,14 +19,14 @@ export default async function updateUser(request: UpdateUserRequest): Promise<vo
     return;
   }
 
-  const user = UserModel.toModel(userInDb);
-
-  user.update(request);
+  if (request.password) {
+    request.password = await bcrypt.hash(request.password, 6);
+  }
 
   await prisma.user.update({
     where: {
       id: request.id,
     },
-    data: await user.toPersistence(),
+    data: request,
   });
 }

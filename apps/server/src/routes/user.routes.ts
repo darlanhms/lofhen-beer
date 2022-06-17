@@ -1,10 +1,10 @@
 import prisma from 'client';
+import { excludeFields } from 'database/excludeFields';
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { currentUser } from 'middlewares/currentUser';
 import ensureAdmin from 'middlewares/ensureAdmin';
 import { validateRequest } from 'middlewares/validateRequest';
-import UserModel from 'models/user';
 import createUser from 'services/user/createUser';
 import deleteUser from 'services/user/deleteUser';
 import login from 'services/user/login';
@@ -49,7 +49,7 @@ userRouter.post(
   async (req, res) => {
     const user = await createUser(req.body);
 
-    return res.json(user.toDTO());
+    return res.json(user);
   },
 );
 
@@ -70,11 +70,13 @@ userRouter.put(
 );
 
 userRouter.get('/', currentUser, ensureAdmin, async (req, res) => {
-  const users = await prisma.user.findMany({});
+  const users = await prisma.user.findMany({
+    select: {
+      ...excludeFields('user', ['password']),
+    },
+  });
 
-  const userModels = users.map(UserModel.toModel);
-
-  return res.json(userModels.map(model => model.toDTO()));
+  return res.json(users);
 });
 
 userRouter.get('/current-user', currentUser, async (req, res) => {
@@ -86,13 +88,16 @@ userRouter.get('/current-user', currentUser, async (req, res) => {
     where: {
       id: req.user?.id,
     },
+    select: {
+      ...excludeFields('user', ['password']),
+    },
   });
 
   if (!user) {
     return res.json({ user: null });
   }
 
-  return res.json({ user: { ...user, password: undefined } });
+  return res.json({ user });
 });
 
 userRouter.get('/:id', currentUser, ensureAdmin, async (req, res) => {
@@ -100,15 +105,12 @@ userRouter.get('/:id', currentUser, ensureAdmin, async (req, res) => {
     where: {
       id: req.params.id,
     },
+    select: {
+      ...excludeFields('user', ['password']),
+    },
   });
 
-  if (!user) {
-    return res.json(null);
-  }
-
-  const userModel = UserModel.toModel(user);
-
-  return res.json(userModel.toDTO());
+  return res.json(user);
 });
 
 userRouter.delete('/:id', currentUser, ensureAdmin, async (req, res) => {
@@ -123,7 +125,10 @@ userRouter.post('/login', ...loginValidations, validateRequest, async (req, res)
   req.session = { jwt };
 
   return res.json({
-    user: user.toDTO(),
+    user: {
+      ...user,
+      password: undefined,
+    },
     jwt,
   });
 });

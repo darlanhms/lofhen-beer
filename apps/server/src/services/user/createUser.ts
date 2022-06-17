@@ -1,7 +1,9 @@
-import { Role } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import prisma from 'client';
 import BadRequestError from 'errors/badRequestError';
-import UserModel from 'models/user';
+import * as bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
+import { excludeFields } from 'database/excludeFields';
 
 export interface CreateUserRequest {
   name: string;
@@ -10,7 +12,7 @@ export interface CreateUserRequest {
   role: Role;
 }
 
-export default async function createUser(user: CreateUserRequest): Promise<UserModel> {
+export default async function createUser(user: CreateUserRequest): Promise<Omit<User, 'password'>> {
   const alreadyRegisteredUser = await prisma.user.findFirst({
     where: {
       username: user.username,
@@ -21,15 +23,17 @@ export default async function createUser(user: CreateUserRequest): Promise<UserM
     throw new BadRequestError('Nome de usuário já cadastrado');
   }
 
-  const newUser = new UserModel({
-    name: user.name,
-    username: user.username,
-    role: user.role,
-    password: user.password,
-  });
+  user.password = await bcrypt.hash(user.password, 6);
 
-  await prisma.user.create({
-    data: await newUser.toPersistence(),
+  const newUser = await prisma.user.create({
+    data: {
+      ...user,
+      id: uuid(),
+      createdAt: new Date(),
+    },
+    select: {
+      ...excludeFields('user', ['password']),
+    },
   });
 
   return newUser;

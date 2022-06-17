@@ -6,7 +6,7 @@ import router from 'routes';
 import { errorHandler } from 'middlewares/errorHandler';
 import cookieSession from 'cookie-session';
 
-import 'database/middleware';
+import 'database/middlewares';
 
 const app = express();
 

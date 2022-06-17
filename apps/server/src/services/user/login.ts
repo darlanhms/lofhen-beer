@@ -1,7 +1,8 @@
 import prisma from 'client';
 import * as jwt from 'jsonwebtoken';
 import BadRequestError from 'errors/badRequestError';
-import UserModel from 'models/user';
+import * as bcrypt from 'bcrypt';
+import { User } from '@prisma/client';
 
 interface LoginRequest {
   username: string;
@@ -9,7 +10,7 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
-  user: UserModel;
+  user: User;
   jwt: string;
 }
 
@@ -24,20 +25,18 @@ export default async function login({ username, password }: LoginRequest): Promi
     throw new BadRequestError('Credenciais inválidas');
   }
 
-  const user = UserModel.toModel(userInDb);
-
-  const passwordMatches = await user.comparePassword(password);
+  const passwordMatches = await bcrypt.compare(password, userInDb.password);
 
   if (!passwordMatches) {
     throw new BadRequestError('Credenciais inválidas');
   }
 
-  const userJwt = jwt.sign(user.toDTO(), process.env.JWT_SECRET as string, {
+  const userJwt = jwt.sign({ ...userInDb, password: undefined }, process.env.JWT_SECRET as string, {
     expiresIn: '7d',
   });
 
   return {
-    user,
+    user: userInDb,
     jwt: userJwt,
   };
 }
