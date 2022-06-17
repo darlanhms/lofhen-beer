@@ -11,13 +11,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
-  name      String   @db.VarChar(255)
-  username  String   @db.VarChar(255)
+  id        String     @id @default(uuid()) @db.Uuid
+  name      String     @db.VarChar(255)
+  username  String     @db.VarChar(255)
   role      Role
-  password  String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @map("created_at")
-  deleted   Boolean  @default(false)
+  password  String     @db.VarChar(255)
+  createdAt DateTime   @default(now()) @map("created_at")
+  deleted   Boolean    @default(false)
+  customers Customer[]
 
   @@map("user")
 }
@@ -29,7 +30,7 @@ enum Role {
 
 model State {
   id     String @id @default(uuid()) @db.Uuid
-  name   String @db.VarChar(255) @unique
+  name   String @unique @db.VarChar(255)
   abbr   String @db.VarChar(10)
   cities City[]
 
@@ -37,10 +38,42 @@ model State {
 }
 
 model City {
-  id      String @id @default(uuid()) @db.Uuid
-  name    String @db.VarChar(255) @unique
-  stateId String @map("state_id") @db.Uuid
-  state   State  @relation(fields: [stateId], references: [id])
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String    @unique @db.VarChar(255)
+  stateId   String    @map("state_id") @db.Uuid
+  state     State     @relation(fields: [stateId], references: [id])
+  addresses Address[]
 
   @@map("city")
+}
+
+model Customer {
+  id          String    @id @default(uuid()) @db.Uuid
+  name        String    @db.VarChar(255)
+  birthdate   String?   @db.VarChar(50)
+  phone       String?   @db.VarChar(50)
+  observation String?   @db.VarChar(500)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   String    @map("created_by") @db.Uuid
+  user        User      @relation(fields: [createdBy], references: [id])
+  addresses   Address[]
+
+  @@map("customer")
+}
+
+model Address {
+  id           String    @id @default(uuid()) @db.Uuid
+  alias        String    @db.VarChar(255)
+  cityId       String    @db.Uuid
+  city         City      @relation(fields: [cityId], references: [id])
+  customerId   String?   @db.Uuid
+  customer     Customer? @relation(fields: [customerId], references: [id])
+  link         String?   @db.Text
+  neighborhood String?   @db.VarChar(255)
+  street       String?   @db.VarChar(255)
+  number       String?   @db.VarChar(50)
+  complement   String?   @db.VarChar(511)
+  reference    String?   @db.VarChar(511)
+
+  @@map("address")
 }
