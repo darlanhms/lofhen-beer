@@ -12,7 +12,7 @@
       "@repositories/*": ["repositories/*"],
       "@errors/*": ["errors/*"],
       "@utils/*": ["utils/*"],
-      "@providers/*": ["providers/*"],
+      "@providers/*": ["providers/*"]
     }
   },
   "include": [

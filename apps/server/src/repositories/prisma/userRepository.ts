@@ -12,7 +12,11 @@ export default class UserRepository implements IUserRepository {
         id: userToPersist.id,
       },
       create: userToPersist,
-      update: userToPersist,
+      update: {
+        name: userToPersist.name,
+        username: userToPersist.username,
+        password: userToPersist.password,
+      },
     });
 
     return UserMapper.toEntity(persisted);

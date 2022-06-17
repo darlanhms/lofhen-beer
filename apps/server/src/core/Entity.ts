@@ -6,8 +6,6 @@ export default abstract class Entity<P> {
   constructor(props: P, id?: string) {
     Object.assign(this, props);
 
-    if (!id) {
-      this.id = uuid();
-    }
+    this.id = id ?? uuid();
   }
 }

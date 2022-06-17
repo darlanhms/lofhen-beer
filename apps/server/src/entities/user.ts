@@ -12,6 +12,8 @@ interface UserProps {
   createdAt?: Date;
 }
 
+type UpdatableProps = Pick<UserProps, 'name' | 'username' | 'password'>;
+
 export default class UserEntity extends Entity<UserProps> {
   @IsNotEmpty({ message: 'Nome é obrigatório' })
   name: string;
@@ -39,6 +41,21 @@ export default class UserEntity extends Entity<UserProps> {
 
     if (!props.createdAt) {
       this.createdAt = new Date();
+    }
+  }
+
+  update(props: Partial<UpdatableProps>): void {
+    if (props.username) {
+      this.username = props.username;
+    }
+
+    if (props.password) {
+      this.password = props.password;
+      this.hashedPassword = false;
+    }
+
+    if (props.name) {
+      this.name = props.name;
     }
   }
 

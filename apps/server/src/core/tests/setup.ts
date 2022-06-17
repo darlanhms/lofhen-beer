@@ -1,9 +1,9 @@
 import { Role } from '@prisma/client';
-import prisma from 'infra/prisma/client';
 import request from 'supertest';
 import * as bcrypt from 'bcrypt';
-import app from 'infra/http/app';
+import app from '@infra/http/app';
 import { faker } from '@faker-js/faker';
+import prisma from '@infra/prisma/client';
 
 global.authenticate = async (role: Role = 'ADMIN') => {
   const user = await prisma.user.create({

@@ -8,7 +8,7 @@ import { filledArray } from '@lofhen/utils';
 import ValidationError from '@core/errors/validationError';
 import BadRequestError from '@core/errors/badRequestError';
 
-interface CreateUserRequest {
+export interface CreateUserRequest {
   name: string;
   username: string;
   password: string;

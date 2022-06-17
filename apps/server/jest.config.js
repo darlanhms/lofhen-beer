@@ -6,6 +6,5 @@ const { compilerOptions } = require('./tsconfig');
 module.exports = {
   ...preset,
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src' }),
-  modulePaths: ['node_modules', 'src'],
-  setupFilesAfterEnv: ['./src/test/setup.ts'],
+  setupFilesAfterEnv: ['./src/core/tests/setup.ts'],
 }
