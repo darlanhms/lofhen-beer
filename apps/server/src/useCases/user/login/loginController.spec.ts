@@ -4,8 +4,8 @@
 
 import request from 'supertest';
 import { faker } from '@faker-js/faker';
-import { Role } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
+import { Role } from '@prisma/client';
 import prisma from '@infra/prisma/client';
 import app from '@infra/http/app';
 import { UserDTO } from '@lofhen/types';

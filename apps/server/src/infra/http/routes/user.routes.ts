@@ -1,5 +1,6 @@
 import CreateUserController from '@useCases/user/createUser/createUserController';
 import FindAllUsersController from '@useCases/user/findAllUsers/findAllUsersController';
+import FindUserByIdController from '@useCases/user/findUserById/FindUserByIdController';
 import LoginController from '@useCases/user/login/loginController';
 import UpdateUserController from '@useCases/user/updateUser/updateUserController';
 import { Router } from 'express';
@@ -12,9 +13,11 @@ const createUserController = new CreateUserController();
 const loginController = new LoginController();
 const findAllUsersController = new FindAllUsersController();
 const updateUserController = new UpdateUserController();
+const findUserByIdController = new FindUserByIdController();
 
 userRouter.post('/', currentUser, ensureAdmin, createUserController.handle);
 userRouter.get('/', currentUser, ensureAdmin, findAllUsersController.handle);
+userRouter.get('/:id', currentUser, ensureAdmin, findUserByIdController.handle);
 userRouter.post('/login', loginController.handle);
 userRouter.put('/:id', currentUser, ensureAdmin, updateUserController.handle);
 
