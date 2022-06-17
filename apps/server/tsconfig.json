@@ -3,7 +3,17 @@
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./src",
-    "paths": {}
+    "paths": {
+      "@entities/*": ["entities/*"],
+      "@core/*": ["core/*"],
+      "@infra/*": ["infra/*"],
+      "@useCases/*": ["useCases/*"],
+      "@mappers/*": ["mappers/*"],
+      "@repositories/*": ["repositories/*"],
+      "@errors/*": ["errors/*"],
+      "@utils/*": ["utils/*"],
+      "@providers/*": ["providers/*"],
+    }
   },
   "include": [
     "src/*.ts",
