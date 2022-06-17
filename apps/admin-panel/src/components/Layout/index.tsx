@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -15,7 +15,8 @@ import {
 } from '@mui/material';
 
 import { IconType } from 'react-icons';
-import { FaChevronDown, FaChevronUp, FaHome, FaUser } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
+import { HiChevronRight } from 'react-icons/hi';
 import { AiOutlineMenu } from 'react-icons/ai';
 
 import useSidebar from 'hooks/useSidebar';
@@ -62,6 +63,17 @@ const routes: Array<IRoute> = [
     Icon: FaHome,
   },
   {
+    label: 'Endereços',
+    Icon: FaMapMarkedAlt,
+    routes: [
+      {
+        path: '/admin/cities',
+        label: 'Cidades',
+        Icon: HiChevronRight,
+      },
+    ],
+  },
+  {
     path: '/admin/users',
     label: 'Usuários',
     Icon: FaUser,
@@ -94,6 +106,23 @@ interface NestedRouteProps {
 
 const NestedRoute = ({ route: { Icon, label, routes: nestedRoutes } }: NestedRouteProps) => {
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    // set open if entered url pathname manually and it's a nested route
+    nestedRoutes.forEach(route => {
+      if (router.pathname.match(route.path) && !open) {
+        setOpen(true);
+      }
+    });
+
+    // set false when change pages and it's not a nested route anymore
+    const matchingRoute = nestedRoutes.find(route => router.pathname.match(route.path));
+    if (!matchingRoute && open) {
+      setOpen(false);
+    }
+  }, [router]);
 
   return (
     <>

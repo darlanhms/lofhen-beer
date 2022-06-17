@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -8,25 +8,13 @@ interface SpecificProps {
   errorMessage?: string;
   adornmentPosition?: AdornmentPositions;
   adornmentIcon?: React.ReactNode;
-  isTouched?: boolean;
 }
 
 export type InputProps = SpecificProps & TextFieldProps;
 
 export const Input = React.forwardRef(
-  ({
-    errorMessage,
-    type,
-    adornmentPosition,
-    adornmentIcon,
-    defaultValue,
-    autoFocus,
-    isTouched,
-    ...rest
-  }: InputProps): React.ReactElement => {
-    const inputRef = useRef<HTMLInputElement>(null);
+  ({ errorMessage, type, adornmentPosition, adornmentIcon, ...rest }: InputProps): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
-    const [shrink, setShrink] = useState<boolean>(!!defaultValue || !!autoFocus);
 
     const passwordInputType = showPassword ? 'text' : 'password';
 
@@ -35,7 +23,11 @@ export const Input = React.forwardRef(
     };
 
     const adornmentPositionKey =
-      type === 'password' || adornmentPosition === 'end' ? 'endAdornment' : 'startAdornment';
+      type === 'password' || adornmentPosition === 'end'
+        ? 'endAdornment'
+        : adornmentPosition
+        ? 'startAdornment'
+        : undefined;
 
     let adornment: React.ReactNode = <></>;
 
@@ -63,54 +55,19 @@ export const Input = React.forwardRef(
       }
     }
 
-    useEffect(() => {
-      const input = inputRef.current;
-
-      function handlerFocusEvent(evt: Event) {
-        const inputValue = (evt.currentTarget as HTMLInputElement).value;
-        if (!inputValue) setShrink(true);
-      }
-
-      function handlerBlurEvent(evt: Event) {
-        const inputValue = (evt.target as HTMLInputElement).value;
-        if (!inputValue) setShrink(false);
-      }
-
-      if (input) {
-        input.addEventListener('focus', handlerFocusEvent);
-        input.addEventListener('blur', handlerBlurEvent);
-      }
-
-      return () => {
-        if (input) {
-          input.removeEventListener('focus', handlerFocusEvent);
-          input.removeEventListener('blur', handlerBlurEvent);
-        }
-      };
-    }, [inputRef]);
-
-    useEffect(() => {
-      if (isTouched && !shrink && inputRef.current?.value) {
-        setShrink(true);
-      }
-    }, [isTouched, inputRef]);
-
     return (
       <>
         <TextField
           error={!!errorMessage || rest.error}
           fullWidth
-          InputLabelProps={{ shrink, ...rest.InputLabelProps }}
           autoComplete="on"
           type={type === 'password' ? passwordInputType : type}
           helperText={errorMessage || ' '}
           {...rest}
-          onChange={e => {
-            if (rest.onChange) {
-              rest.onChange(e);
-            }
+          InputProps={{
+            ...rest.InputProps,
+            ...(adornmentPositionKey ? { [adornmentPositionKey]: adornment } : {}),
           }}
-          InputProps={{ ...rest.InputProps, [adornmentPositionKey]: adornment, inputRef }}
         />
       </>
     );

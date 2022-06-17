@@ -198,7 +198,7 @@ export function DataTable(props: DataTableProps): React.ReactElement {
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<string | undefined>();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const { data, selectType, columns } = props;
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
@@ -356,6 +356,7 @@ export function DataTable(props: DataTableProps): React.ReactElement {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
+          labelRowsPerPage="Linhas por página"
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}

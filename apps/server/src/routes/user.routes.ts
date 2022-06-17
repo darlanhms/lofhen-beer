@@ -88,6 +88,10 @@ userRouter.get('/current-user', currentUser, async (req, res) => {
     },
   });
 
+  if (!user) {
+    return res.json({ user: null });
+  }
+
   return res.json({ user: { ...user, password: undefined } });
 });
 

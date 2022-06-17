@@ -27,7 +27,7 @@ const userSchema = yup
   .required();
 
 const UpdateUserPage: CustomPage = () => {
-  const { control, handleSubmit, setValue, watch } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     resolver: yupResolver(userSchema),
     defaultValues: {
       name: '',
@@ -80,14 +80,13 @@ const UpdateUserPage: CustomPage = () => {
   };
 
   return (
-    <FormLayout onBack={() => Router.back()} title="Novo usuário">
-      <PageMetadata title="Novo usuário" />
+    <FormLayout onBack={() => Router.back()} title="Editar usuário">
+      <PageMetadata title="Editar usuário" />
       <UserForm
         control={control}
         onSubmit={handleSubmit(data => onSubmit({ ...data, id }))}
         loading={updateUserMutation.isLoading}
         isUpdating
-        watch={watch}
       />
     </FormLayout>
   );
