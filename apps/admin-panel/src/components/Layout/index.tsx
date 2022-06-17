@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 
 import { IconType } from 'react-icons';
-import { FaChevronDown, FaChevronUp, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaChevronDown, FaChevronRight, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
 import { HiChevronRight } from 'react-icons/hi';
 import { AiOutlineMenu } from 'react-icons/ai';
 
@@ -131,7 +131,7 @@ const NestedRoute = ({ route: { Icon, label, routes: nestedRoutes } }: NestedRou
           <Icon color="white" size="20" />
         </ListItemIcon>
         <ListItemText>{label}</ListItemText>
-        {open ? <FaChevronUp color="white" size="14" /> : <FaChevronDown color="white" size="14" />}
+        {open ? <FaChevronDown color="white" size="14" /> : <FaChevronRight color="white" size="14" />}
       </DrawerOption>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List>
