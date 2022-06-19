@@ -8,6 +8,8 @@ interface CityProps {
   state?: StateEntity;
 }
 
+type UpdatableProps = Pick<CityProps, 'name'>;
+
 export default class CityEntity extends Entity<CityProps> {
   @IsNotEmpty({ message: 'Nome é obrigatório' })
   name: string;
@@ -16,4 +18,10 @@ export default class CityEntity extends Entity<CityProps> {
   stateId: string;
 
   state: StateEntity;
+
+  update(props: Partial<UpdatableProps>): void {
+    if (props.name) {
+      this.name = props.name;
+    }
+  }
 }
