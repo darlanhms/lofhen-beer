@@ -5,7 +5,7 @@ import StateEntity from './state';
 interface CityProps {
   name: string;
   stateId: string;
-  state: StateEntity;
+  state?: StateEntity;
 }
 
 export default class CityEntity extends Entity<CityProps> {
