@@ -8,12 +8,17 @@ import cookieSession from 'cookie-session';
 
 import '@infra/prisma/middlewares';
 import '@infra/containers';
+import getLocalNetworkAddresses from '@core/utils/getLocalNetworkAddresses';
 
 const app = express();
 
 app.set('trust proxy', true);
 
-const whitelist = ['https://lofhen-local.com:3001', 'https://192.168.2.54:3001'];
+const whitelist = [
+  'https://lofhen-local.com:3001',
+  'https://192.168.2.54:3001',
+  ...getLocalNetworkAddresses().map(address => `https://${address}:3001`),
+];
 
 app.use(bodyParser.json());
 app.use(
