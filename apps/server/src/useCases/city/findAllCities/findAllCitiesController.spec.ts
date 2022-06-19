@@ -29,7 +29,7 @@ async function createCity(): Promise<void> {
 }
 
 describe('Find all cities controller', () => {
-  it('find all cities', async () => {
+  it('finds all cities', async () => {
     const cookies = await authenticate();
 
     await createCity();
