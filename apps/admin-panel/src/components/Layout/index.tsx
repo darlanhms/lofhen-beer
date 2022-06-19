@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { IconType } from 'react-icons';
+import { AiOutlineMenu } from 'react-icons/ai';
+import { FaChevronDown, FaChevronRight, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
+import { HiChevronRight } from 'react-icons/hi';
 import {
   Box,
   Collapse,
@@ -14,13 +19,8 @@ import {
   Typography,
 } from '@mui/material';
 
-import { IconType } from 'react-icons';
-import { FaChevronDown, FaChevronRight, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
-import { HiChevronRight } from 'react-icons/hi';
-import { AiOutlineMenu } from 'react-icons/ai';
-
-import useSidebar from 'hooks/useSidebar';
 import bannerImg from 'assets/images/banner.png';
+import useSidebar from 'hooks/useSidebar';
 
 import useUser from 'hooks/useUser';
 import {

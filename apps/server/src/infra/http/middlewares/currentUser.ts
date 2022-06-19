@@ -1,6 +1,6 @@
+import { UserDTO } from '@lofhen/types';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserDTO } from '@lofhen/types';
 
 export function currentUser(req: Request, _: Response, next: NextFunction): void {
   if (!req.session?.jwt) {

@@ -1,7 +1,7 @@
-import Controller from '@core/Controller';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { container } from 'tsyringe';
+import Controller from '@core/Controller';
 import UpdateUser from './updateUser';
 
 export default class UpdateUserController implements Controller {

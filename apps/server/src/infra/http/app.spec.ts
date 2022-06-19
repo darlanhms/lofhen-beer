@@ -1,5 +1,5 @@
-import request from 'supertest';
 import { StatusCodes } from 'http-status-codes';
+import request from 'supertest';
 import app from './app';
 
 describe('App', () => {

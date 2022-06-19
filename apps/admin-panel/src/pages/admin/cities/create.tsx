@@ -1,18 +1,18 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
+import Router from 'next/router';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQuery } from 'react-query';
 import { useAlert } from '@lofhen/ui-kit';
 import { formatErrorMessage } from '@lofhen/utils';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import FormLayout from 'components/Form/FormLayout';
 import CityForm from 'components/Forms/CityForm';
 import Layout from 'components/Layout';
 import PageMetadata from 'components/PageMetadata';
 import createCity, { CreateCityRequest } from 'lib/city/createCity';
 import getStates from 'lib/state/getStates';
-import Router from 'next/router';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useMutation, useQuery } from 'react-query';
 import { CustomPage } from 'types/customPage';
-import * as yup from 'yup';
 
 const citySchema = yup
   .object({

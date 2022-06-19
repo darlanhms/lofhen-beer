@@ -1,6 +1,6 @@
+import { inject, injectable } from 'tsyringe';
 import UseCase from '@core/UseCase';
 import IUserRepository from '@repositories/IUserRepository';
-import { inject, injectable } from 'tsyringe';
 
 interface UpdateUserRequest {
   id: string;

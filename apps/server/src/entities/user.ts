@@ -1,7 +1,7 @@
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import Entity from '@core/Entity';
 import { IsNotEmpty, IsIn, MinLength, MaxLength } from 'class-validator';
+import Entity from '@core/Entity';
 
 interface UserProps {
   name: string;

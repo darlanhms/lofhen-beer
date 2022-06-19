@@ -1,5 +1,5 @@
-import RequestError from '@core/errors/requestError';
 import { NextFunction, Request, Response } from 'express';
+import RequestError from '@core/errors/requestError';
 import { GenericRequestError, RequestErrorType } from '@core/types/requestErrors';
 
 export const errorHandler = (

@@ -1,5 +1,5 @@
-import Entity from '@core/Entity';
 import { IsNotEmpty } from 'class-validator';
+import Entity from '@core/Entity';
 import StateEntity from './state';
 
 interface CityProps {

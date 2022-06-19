@@ -1,5 +1,5 @@
-import prisma from '@infra/prisma/client';
 import UserEntity from '@entities/user';
+import prisma from '@infra/prisma/client';
 import UserMapper from '@mappers/userMapper';
 import IUserRepository from '@repositories/IUserRepository';
 

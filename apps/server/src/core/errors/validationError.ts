@@ -1,5 +1,5 @@
-import { StatusCodes } from 'http-status-codes';
 import { ValidationError as ClassValidationError } from 'class-validator';
+import { StatusCodes } from 'http-status-codes';
 import { RequestErrorType, RequestValidationError } from '@core/types/requestErrors';
 import RequestError from './requestError';
 

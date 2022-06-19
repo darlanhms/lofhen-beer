@@ -1,17 +1,17 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+import Router from 'next/router';
+import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { Role } from '@lofhen/types';
 import { useAlert } from '@lofhen/ui-kit';
 import { formatErrorMessage } from '@lofhen/utils';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import FormLayout from 'components/Form/FormLayout';
 import UserForm from 'components/Forms/UserForm';
 import Layout from 'components/Layout';
 import PageMetadata from 'components/PageMetadata';
 import { createUser, CreateUserRequest } from 'lib/user/createUser';
-import Router from 'next/router';
-import { useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
 import { CustomPage } from 'types/customPage';
-import * as yup from 'yup';
 
 const userSchema = yup
   .object({

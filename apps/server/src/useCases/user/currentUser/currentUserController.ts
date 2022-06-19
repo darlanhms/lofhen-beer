@@ -1,7 +1,7 @@
-import Controller from '@core/Controller';
-import UserMapper from '@mappers/userMapper';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import Controller from '@core/Controller';
+import UserMapper from '@mappers/userMapper';
 import FindUserById from '../findUserById/findUserById';
 
 export default class CurrentUserController implements Controller {

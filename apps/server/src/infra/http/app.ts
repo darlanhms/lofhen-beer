@@ -1,14 +1,14 @@
-import bodyParser from 'body-parser';
-import express from 'express';
 import os from 'os';
-import cors from 'cors';
-import router from '@infra/http/routes';
-import { errorHandler } from '@infra/http/middlewares/errorHandler';
+import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
+import cors from 'cors';
+import express from 'express';
+import getLocalNetworkAddresses from '@core/utils/getLocalNetworkAddresses';
+import { errorHandler } from '@infra/http/middlewares/errorHandler';
+import router from '@infra/http/routes';
 
 import '@infra/prisma/middlewares';
 import '@infra/containers';
-import getLocalNetworkAddresses from '@core/utils/getLocalNetworkAddresses';
 
 const app = express();
 

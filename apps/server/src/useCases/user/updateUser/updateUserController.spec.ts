@@ -2,14 +2,14 @@
  * @jest-environment ./prisma/prisma-test-environment.js
  */
 
-import request from 'supertest';
-
+import { UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
+
 import { Role } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import prisma from '@infra/prisma/client';
+import request from 'supertest';
 import app from '@infra/http/app';
-import { UserDTO } from '@lofhen/types';
+import prisma from '@infra/prisma/client';
 
 const createUser = async (): Promise<UserDTO> => {
   const cookies = await authenticate();

@@ -1,10 +1,10 @@
+import { Router } from 'express';
 import CreateUserController from '@useCases/user/createUser/createUserController';
 import CurrentUserController from '@useCases/user/currentUser/currentUserController';
 import FindAllUsersController from '@useCases/user/findAllUsers/findAllUsersController';
 import FindUserByIdController from '@useCases/user/findUserById/findUserByIdController';
 import LoginController from '@useCases/user/login/loginController';
 import UpdateUserController from '@useCases/user/updateUser/updateUserController';
-import { Router } from 'express';
 import { currentUser } from '../middlewares/currentUser';
 import ensureAdmin from '../middlewares/ensureAdmin';
 

@@ -2,13 +2,13 @@
  * @jest-environment ./prisma/prisma-test-environment.js
  */
 
+import { Role, UserDTO } from '@lofhen/types';
+import { faker } from '@faker-js/faker';
+import { StatusCodes } from 'http-status-codes';
 import request from 'supertest';
 
 import app from '@infra/http/app';
 import prisma from '@infra/prisma/client';
-import { Role, UserDTO } from '@lofhen/types';
-import { faker } from '@faker-js/faker';
-import { StatusCodes } from 'http-status-codes';
 
 const createUser = async (cookies: Array<string>): Promise<UserDTO> => {
   const { body: user } = await request(app).post('/api/users').set('Cookie', cookies).send({

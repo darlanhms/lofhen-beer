@@ -1,15 +1,14 @@
-import { Button, Container, IconButton, Tooltip } from '@mui/material';
-import HeaderTitle from 'components/HeaderTitle';
-import { FaPlus, FaPencilAlt } from 'react-icons/fa';
-import Layout from 'components/Layout';
-import PageMetadata from 'components/PageMetadata';
-import { CustomPage } from 'types/customPage';
 import Router from 'next/router';
 import { useQuery } from 'react-query';
-import getCities from 'lib/city/getCities';
-
-import { formatErrorMessage } from '@lofhen/utils';
+import { FaPlus, FaPencilAlt } from 'react-icons/fa';
 import { DataTable, FlexAlignRight, useAlert, useTableSelection } from '@lofhen/ui-kit';
+import { formatErrorMessage } from '@lofhen/utils';
+import { Button, Container, IconButton, Tooltip } from '@mui/material';
+import HeaderTitle from 'components/HeaderTitle';
+import Layout from 'components/Layout';
+import PageMetadata from 'components/PageMetadata';
+import getCities from 'lib/city/getCities';
+import { CustomPage } from 'types/customPage';
 
 const CitiesPage: CustomPage = () => {
   const [selected, setSelected] = useTableSelection('single');

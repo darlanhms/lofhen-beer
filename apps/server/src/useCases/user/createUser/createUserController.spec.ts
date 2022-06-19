@@ -2,13 +2,13 @@
  * @jest-environment ./prisma/prisma-test-environment.js
  */
 
-import request from 'supertest';
 import { faker } from '@faker-js/faker';
 import { Role } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import prisma from '@infra/prisma/client';
-import app from '@infra/http/app';
+import request from 'supertest';
 import NotAuthorizedError from '@core/errors/notAuthorizedError';
+import app from '@infra/http/app';
+import prisma from '@infra/prisma/client';
 import { CreateUserRequest } from './createUser';
 
 function makeUserPayload(overrides?: Partial<CreateUserRequest>): CreateUserRequest {

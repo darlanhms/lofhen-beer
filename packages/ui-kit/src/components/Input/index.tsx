@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { IconButton, InputAdornment, TextField, TextFieldProps } from '@mui/material';
 
 type AdornmentPositions = 'start' | 'end';
 

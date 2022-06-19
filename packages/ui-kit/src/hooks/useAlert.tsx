@@ -2,8 +2,8 @@ import React, { createContext, useCallback, useContext } from 'react';
 
 import { FaTimes } from 'react-icons/fa';
 
-import { useSnackbar, VariantType } from 'notistack';
 import { IconButton } from '@mui/material';
+import { useSnackbar, VariantType } from 'notistack';
 
 interface AlertContextProps {
   successAlert: (message: string) => void;

@@ -1,8 +1,8 @@
-import request from 'supertest';
+import { Role, UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from 'http-status-codes';
+import request from 'supertest';
 import app from '@infra/http/app';
-import { Role, UserDTO } from '@lofhen/types';
 
 const createUser = async (): Promise<UserDTO> => {
   const cookies = await authenticate();

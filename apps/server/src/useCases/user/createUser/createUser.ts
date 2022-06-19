@@ -1,12 +1,12 @@
-import UseCase from '@core/UseCase';
-import UserEntity from '@entities/user';
+import { filledArray } from '@lofhen/utils';
 import { Role } from '@prisma/client';
-import IUserRepository from '@repositories/IUserRepository';
 import { validate } from 'class-validator';
 import { inject, injectable } from 'tsyringe';
-import { filledArray } from '@lofhen/utils';
-import ValidationError from '@core/errors/validationError';
 import BadRequestError from '@core/errors/badRequestError';
+import ValidationError from '@core/errors/validationError';
+import UseCase from '@core/UseCase';
+import UserEntity from '@entities/user';
+import IUserRepository from '@repositories/IUserRepository';
 
 export interface CreateUserRequest {
   name: string;
