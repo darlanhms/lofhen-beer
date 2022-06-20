@@ -79,13 +79,11 @@ const Login: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
-    const {
-      data: { user },
-    } = await apiClient.get('/users/current-user', {
+    const { data } = await apiClient.get('/users/current-user', {
       headers: req.headers as any,
     });
 
-    if (user) {
+    if (data) {
       return {
         redirect: {
           destination: '/admin',
