@@ -1,8 +1,8 @@
-import FormInput from 'components/Form/FormInput';
-import { Button, Stack } from '@mui/material';
-import { AlginRightBox } from '@lofhen/ui-kit';
-import FormSelect from 'components/Form/FormSelect';
 import { Role } from '@lofhen/types';
+import { AlginRightBox } from '@lofhen/ui-kit';
+import { Button, Stack } from '@mui/material';
+import FormInput from 'components/Form/FormInput';
+import FormSelect from 'components/Form/FormSelect';
 import { BaseFormProps } from '../baseFormProps';
 
 const UserForm = ({ onSubmit, control, loading, isUpdating }: BaseFormProps): React.ReactElement => {

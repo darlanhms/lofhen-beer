@@ -1,8 +1,8 @@
-import { alpha, Box, GlobalStyles, styled, ThemeProvider as MuiThemeProvider } from '@mui/material';
-import { SnackbarProvider, VariantType } from 'notistack';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { FaInfoCircle, FaExclamationCircle, FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
+import { alpha, Box, GlobalStyles, styled, ThemeProvider as MuiThemeProvider } from '@mui/material';
+import { SnackbarProvider, VariantType } from 'notistack';
 import { AlertProvider } from '../../hooks/useAlert';
 import globalStyles from '../../theme/globalStyles';
 import theme from '../../theme/theme';

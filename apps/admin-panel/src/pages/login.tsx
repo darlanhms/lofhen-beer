@@ -1,17 +1,17 @@
-import { Box, Button, Container, Stack } from '@mui/material';
 import { GetServerSideProps, NextPage } from 'next';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import Image from 'next/image';
-import apiClient from 'services/api';
-import bannerImg from 'assets/images/banner.png';
+import Router from 'next/router';
 import { useForm } from 'react-hook-form';
-import FormInput from 'components/Form/FormInput';
 import { useMutation } from 'react-query';
 import { useAlert } from '@lofhen/ui-kit';
 import { formatErrorMessage } from '@lofhen/utils';
-import Router from 'next/router';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button, Container, Stack } from '@mui/material';
+import bannerImg from 'assets/images/banner.png';
+import FormInput from 'components/Form/FormInput';
 import PageMetadata from 'components/PageMetadata';
+import apiClient from 'services/api';
 
 const loginSchema = yup
   .object({
@@ -79,13 +79,11 @@ const Login: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
-    const {
-      data: { user },
-    } = await apiClient.get('/users/current-user', {
+    const { data } = await apiClient.get('/users/current-user', {
       headers: req.headers as any,
     });
 
-    if (user) {
+    if (data) {
       return {
         redirect: {
           destination: '/admin',

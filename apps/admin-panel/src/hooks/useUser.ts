@@ -1,6 +1,6 @@
+import { useQuery } from 'react-query';
 import { UserDTO } from '@lofhen/types';
 import { getCurrentUser } from 'lib/user/getCurrentUser';
-import { useQuery } from 'react-query';
 
 interface UseUserResponse {
   user: UserDTO | null | undefined;

@@ -1,9 +1,9 @@
-import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@lofhen/ui-kit';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { CustomPage } from 'types/customPage';
 import React from 'react';
+import type { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ThemeProvider } from '@lofhen/ui-kit';
 import { SidebarProvider } from 'hooks/useSidebar';
+import { CustomPage } from 'types/customPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {

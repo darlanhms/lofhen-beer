@@ -1,12 +1,10 @@
 import { useMemo, useState } from 'react';
-import { Container } from '@mui/system';
-import Layout from 'components/Layout';
-import PageMetadata from 'components/PageMetadata';
-import { CustomPage } from 'types/customPage';
-import { DataTable, FlexAlignRight, Input, useAlert, useArrayQuery, useTableSelection } from '@lofhen/ui-kit';
-import { Role, UserDTO } from '@lofhen/types';
+import Router from 'next/router';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FaPencilAlt, FaPlus, FaTrashAlt, FaSearch } from 'react-icons/fa';
-import HeaderTitle from 'components/HeaderTitle';
+import { Role, UserDTO } from '@lofhen/types';
+import { DataTable, FlexAlignRight, Input, useAlert, useArrayQuery, useTableSelection } from '@lofhen/ui-kit';
+import { formatErrorMessage } from '@lofhen/utils';
 import {
   Button,
   Dialog,
@@ -17,11 +15,13 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
-import Router from 'next/router';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getUsers } from 'lib/user/getUsers';
-import { formatErrorMessage } from '@lofhen/utils';
+import { Container } from '@mui/system';
+import HeaderTitle from 'components/HeaderTitle';
+import Layout from 'components/Layout';
+import PageMetadata from 'components/PageMetadata';
 import { deleteUser } from 'lib/user/deleteUser';
+import { getUsers } from 'lib/user/getUsers';
+import { CustomPage } from 'types/customPage';
 
 const getUserRoleLabel = (user: UserDTO): string => {
   switch (user.role) {

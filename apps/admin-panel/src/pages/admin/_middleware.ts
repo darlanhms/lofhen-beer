@@ -3,13 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function middleware(req: NextRequest): Promise<Response> {
   const url = req.nextUrl.clone();
 
-  const data = await fetch(`${process.env.API_URL}/users/current-user`, {
+  const raw = await fetch(`${process.env.API_URL}/users/current-user`, {
     headers: req.headers,
   });
 
-  const { user } = await data.json();
+  const data = await raw.json();
 
-  if (!user) {
+  if (!data) {
     return NextResponse.redirect(`${url.origin}/login`);
   }
 

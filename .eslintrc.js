@@ -1,3 +1,9 @@
+const tsConfigApi = require('./apps/server/tsconfig.json');
+
+const paths = Object.keys(tsConfigApi.compilerOptions.paths)
+    .filter(key => key.includes('@'))
+    .map(key => key.replace(/[^a-zA-Z]/g, ''));
+
 module.exports = {
   env: {
     es6: true,
@@ -59,6 +65,79 @@ module.exports = {
     'react/prop-types': 'off',
     'no-nested-ternary': 'off',
     camelcase: 'off',
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'unknown',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type',
+        ],
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'next',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'next/**',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'react+(|-*)',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: '@react-icons/**',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'react-icons/**',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: '@lofhen/**',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: 'yup',
+            group: 'external',
+            position: 'before',
+          },
+          {
+            pattern: `@+(core|infra|repositories|mappers|providers|entities|useCases|${paths.join('|')})/**`,
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: '@*/**',
+            group: 'external',
+            position: 'before',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['react'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
   settings: {
     'import/resolver': {

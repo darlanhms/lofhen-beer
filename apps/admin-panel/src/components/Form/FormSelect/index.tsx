@@ -1,5 +1,5 @@
-import { Select, SelectProps } from '@lofhen/ui-kit';
 import { Controller } from 'react-hook-form';
+import { Select, SelectProps } from '@lofhen/ui-kit';
 import { BaseFormInputProps } from '../baseFormInputProps';
 
 const FormSelect: React.FC<BaseFormInputProps & SelectProps> = ({ name, control, ...rest }) => {
