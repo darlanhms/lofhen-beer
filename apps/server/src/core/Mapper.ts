@@ -34,4 +34,8 @@ export default abstract class Mapper<
   toDTOOrNull(entity: E | null | undefined): D | null {
     return entity ? this.toDTO(entity) : null;
   }
+
+  toDTOOrUndefined(entity: E | null | undefined): D | undefined {
+    return entity ? this.toDTO(entity) : undefined;
+  }
 }

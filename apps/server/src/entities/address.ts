@@ -26,7 +26,7 @@ export default class AddressEntity extends Entity<AddressProps> {
   private _link: string | null;
 
   @IsOptional()
-  @IsUrl({ message: 'Link do endereço deve ser válido' })
+  @IsUrl(undefined, { message: 'Link do endereço deve ser válido' })
   get link(): string | null {
     return this._link;
   }

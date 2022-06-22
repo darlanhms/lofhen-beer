@@ -1,3 +1,5 @@
+import { CityDTO } from './city';
+
 export interface AddressDTO {
   id: string;
   alias: string;
@@ -10,4 +12,5 @@ export interface AddressDTO {
   reference: string | null;
   complement: string | null;
   enabled: boolean;
+  city?: CityDTO;
 }

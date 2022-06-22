@@ -14,7 +14,7 @@ class CityMapperBase extends Mapper<CityEntity, PrismaCity, CityDTO> {
       {
         name: persisted.name,
         stateId: persisted.stateId,
-        state: StateMapper.toEntity(persisted.state),
+        state: StateMapper.toEntityOrUndefined(persisted.state),
       },
       persisted.id,
     );
@@ -33,7 +33,7 @@ class CityMapperBase extends Mapper<CityEntity, PrismaCity, CityDTO> {
       id: entity.id,
       name: entity.name,
       stateId: entity.stateId,
-      state: entity.state,
+      state: StateMapper.toDTOOrUndefined(entity.state),
     };
   }
 }

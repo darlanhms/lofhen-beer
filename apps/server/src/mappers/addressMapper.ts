@@ -57,6 +57,7 @@ class AddressMapperBase extends Mapper<AddressEntity, PrismaAddress, AddressDTO>
       complement: entity.complement,
       reference: entity.reference,
       enabled: entity.enabled,
+      city: CityMapper.toDTOOrUndefined(entity.city),
     };
   }
 }

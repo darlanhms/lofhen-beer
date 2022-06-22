@@ -13,9 +13,6 @@ export default class AddressRepository implements IAddressRepository {
       },
       create: addressToPersist,
       update: addressToPersist,
-      include: {
-        city: true,
-      },
     });
 
     return AddressMapper.toEntity(persisted);
