@@ -31,4 +31,4 @@ jobs:
       run: yarn install --pure-lockfile
     
     - name: Run lint
-      run: yarn lin
+      run: yarn lint
