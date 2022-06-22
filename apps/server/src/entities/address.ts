@@ -17,6 +17,11 @@ interface AddressProps {
   city?: CityEntity;
 }
 
+type UpdatableProps = Pick<
+  AddressProps,
+  'alias' | 'link' | 'neighborhood' | 'street' | 'number' | 'reference' | 'complement' | 'enabled'
+>;
+
 export default class AddressEntity extends Entity<AddressProps> {
   @IsNotEmpty({ message: 'Apelido é obrigatório' })
   alias: string;
@@ -63,5 +68,32 @@ export default class AddressEntity extends Entity<AddressProps> {
     };
 
     super(propsWithDefault, id);
+  }
+
+  update(props: Partial<UpdatableProps>): void {
+    if (props.alias) {
+      this.alias = props.alias;
+    }
+    if (props.link || props.link === null) {
+      this.link = props.link;
+    }
+    if (props.neighborhood || props.neighborhood === null) {
+      this.neighborhood = props.neighborhood;
+    }
+    if (props.street || props.street === null) {
+      this.street = props.street;
+    }
+    if (props.number || props.number === null) {
+      this.number = props.number;
+    }
+    if (props.reference || props.reference === null) {
+      this.reference = props.reference;
+    }
+    if (props.complement || props.complement === null) {
+      this.complement = props.complement;
+    }
+    if (props.enabled || props.enabled === false) {
+      this.enabled = props.enabled;
+    }
   }
 }
