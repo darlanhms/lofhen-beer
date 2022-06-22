@@ -1,3 +1,7 @@
+/**
+ * @jest-environment ./prisma/prisma-test-environment.js
+ */
+
 import { StatusCodes } from 'http-status-codes';
 import request from 'supertest';
 import app from '@infra/http/app';

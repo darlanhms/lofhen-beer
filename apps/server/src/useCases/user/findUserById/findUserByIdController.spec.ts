@@ -1,3 +1,7 @@
+/**
+ * @jest-environment ./prisma/prisma-test-environment.js
+ */
+
 import { Role, UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
 import { StatusCodes } from 'http-status-codes';
