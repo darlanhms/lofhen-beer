@@ -23,9 +23,21 @@ export default class AddressEntity extends Entity<AddressProps> {
 
   customerId: string | null;
 
+  private _link: string | null;
+
   @IsOptional()
   @IsUrl({ message: 'Link do endereço deve ser válido' })
-  _link: string | null;
+  get link(): string | null {
+    return this._link;
+  }
+
+  set link(link: string | null) {
+    if (link) {
+      this._link = getFirstLinkFromString(link) || '';
+    } else {
+      this._link = null;
+    }
+  }
 
   @IsNotEmpty({ message: 'Cidade é obrigatória' })
   cityId: string;
@@ -43,18 +55,6 @@ export default class AddressEntity extends Entity<AddressProps> {
   enabled: boolean;
 
   city: CityEntity;
-
-  get link(): string | null {
-    return this._link;
-  }
-
-  set link(link: string | null) {
-    if (link) {
-      this._link = getFirstLinkFromString(link) || '';
-    } else {
-      this._link = null;
-    }
-  }
 
   constructor(props: AddressProps, id?: string) {
     const propsWithDefault: AddressProps = {
