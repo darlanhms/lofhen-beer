@@ -27,6 +27,10 @@ export default abstract class Mapper<
     return persisted ? this.toEntity(persisted) : null;
   }
 
+  toEntityOrUndefined(persisted: P | null | undefined): E | undefined {
+    return persisted ? this.toEntity(persisted) : undefined;
+  }
+
   toDTOOrNull(entity: E | null | undefined): D | null {
     return entity ? this.toDTO(entity) : null;
   }

@@ -74,6 +74,7 @@ model Address {
   number       String?   @db.VarChar(50)
   complement   String?   @db.VarChar(511)
   reference    String?   @db.VarChar(511)
+  enabled      Boolean   @db.Boolean @default(true)
 
   @@map("address")
 }
