@@ -67,6 +67,11 @@ const routes: Array<IRoute> = [
     Icon: FaMapMarkedAlt,
     routes: [
       {
+        path: '/admin/addresses',
+        label: 'Endereços Entrega',
+        Icon: HiChevronRight,
+      },
+      {
         path: '/admin/cities',
         label: 'Cidades',
         Icon: HiChevronRight,

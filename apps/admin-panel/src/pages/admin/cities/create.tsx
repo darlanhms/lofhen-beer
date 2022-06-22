@@ -31,11 +31,11 @@ const CreateCityPage: CustomPage = () => {
     },
   });
 
-  const { data: states } = useQuery(['getState'], async () => {
+  const { data: states } = useQuery(['getStates'], async () => {
     return getStates();
   });
 
-  const createUserMutation = useMutation(
+  const createCityMutation = useMutation(
     async (data: CreateCityRequest) => {
       return createCity(data);
     },
@@ -50,7 +50,7 @@ const CreateCityPage: CustomPage = () => {
   );
 
   const onSubmit = (data: CreateCityRequest) => {
-    createUserMutation.mutate(data);
+    createCityMutation.mutate(data);
   };
 
   useEffect(() => {
@@ -61,12 +61,12 @@ const CreateCityPage: CustomPage = () => {
 
   return (
     <FormLayout onBack={() => Router.back()} title="Nova cidade">
-      <PageMetadata title="Novo cidade" />
+      <PageMetadata title="Nova cidade" />
       <CityForm
         states={states}
         control={control}
         onSubmit={handleSubmit(onSubmit)}
-        loading={createUserMutation.isLoading}
+        loading={createCityMutation.isLoading}
       />
     </FormLayout>
   );
