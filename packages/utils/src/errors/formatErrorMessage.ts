@@ -17,8 +17,12 @@ export function formatErrorMessage(error: unknown): string {
           return responseError.data.fields.map(({ message }) => message).join(', ');
         }
 
-        return `${responseError.status} - ${responseError.statusText}`;
+        if (responseError.status || responseError.statusText) {
+          return `${responseError.status} - ${responseError.statusText}`;
+        }
       }
+
+      return error.message;
     }
 
     if (error instanceof Error) {

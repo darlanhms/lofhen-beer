@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import { IconType } from 'react-icons';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FaChevronDown, FaChevronRight, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
 import { HiChevronRight } from 'react-icons/hi';
+import { isMobile } from '@lofhen/utils';
 import {
   Box,
   Collapse,
@@ -92,9 +93,16 @@ interface SingleRouteProps {
 
 const SingleRoute = ({ route: { path, label, Icon }, isSubRoute }: SingleRouteProps): React.ReactElement => {
   const { pathname } = useRouter();
+  const { setOpen } = useSidebar();
+
+  const handleClickLink = useCallback(() => {
+    if (isMobile()) {
+      setOpen(false);
+    }
+  }, []);
 
   return (
-    <Link key={path} href={path}>
+    <Link key={path} href={path} onClick={handleClickLink}>
       <DrawerOption sx={{ ...(isSubRoute ? { pl: 4 } : {}) }} selected={pathname === path}>
         <ListItemIcon>
           <Icon color="white" size="20" />
