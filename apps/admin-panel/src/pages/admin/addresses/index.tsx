@@ -1,14 +1,28 @@
+import { useMemo } from 'react';
 import Router from 'next/router';
 import { useQuery } from 'react-query';
 import { FaPlus, FaPencilAlt, FaSearch } from 'react-icons/fa';
+import { FiExternalLink } from 'react-icons/fi';
 import { DataTable, FlexAlignRight, Input, useAlert, useArrayQuery, useTableSelection } from '@lofhen/ui-kit';
 import { formatErrorMessage } from '@lofhen/utils';
-import { Button, Container, IconButton, Tooltip } from '@mui/material';
+import { Button, Chip, Container, IconButton, Tooltip } from '@mui/material';
 import HeaderTitle from 'components/HeaderTitle';
 import Layout from 'components/Layout';
 import PageMetadata from 'components/PageMetadata';
 import getAddresses from 'lib/address/getAddresses';
 import { CustomPage } from 'types/customPage';
+
+interface EnabledChipProps {
+  enabled: boolean;
+}
+
+const EnabledChip: React.FunctionComponent<EnabledChipProps> = ({ enabled }) => {
+  if (enabled) {
+    return <Chip color="success" variant="outlined" label="Sim" />;
+  }
+
+  return <Chip color="error" variant="outlined" label="Não" />;
+};
 
 const AddressesPage: CustomPage = () => {
   const [selected, setSelected] = useTableSelection('single');
@@ -27,6 +41,21 @@ const AddressesPage: CustomPage = () => {
   );
 
   const [filteredAddresses, handleSearch] = useArrayQuery(data, ['alias']);
+
+  const addresses = useMemo(() => {
+    return filteredAddresses.map(address => ({
+      ...address,
+      link: address.link ? (
+        <div style={{ display: 'flex' }}>
+          <a href={address.link} target="_blank" onClick={e => e.stopPropagation()} rel="noreferrer">
+            Link externo
+          </a>
+          <FiExternalLink style={{ marginLeft: '3px', marginTop: '4px' }} />
+        </div>
+      ) : null,
+      enabled: <EnabledChip enabled={address.enabled} />,
+    }));
+  }, [filteredAddresses]);
 
   return (
     <Container maxWidth="xl">
@@ -49,8 +78,29 @@ const AddressesPage: CustomPage = () => {
             label: 'Cidade',
             prop: 'city.name',
           },
+          {
+            label: 'Link',
+            prop: 'link',
+          },
+          {
+            label: 'Bairro',
+            prop: 'neighborhood',
+          },
+          {
+            label: 'Rua',
+            prop: 'street',
+          },
+          {
+            label: 'Número',
+            prop: 'number',
+          },
+          {
+            label: 'Ativo',
+            prop: 'enabled',
+            alignment: 'center',
+          },
         ]}
-        data={filteredAddresses}
+        data={addresses}
         headerToolbar={
           <FlexAlignRight>
             <Input
@@ -66,7 +116,7 @@ const AddressesPage: CustomPage = () => {
         singleSelectedToolbar={
           <FlexAlignRight>
             <Tooltip title="Editar" sx={{ mr: 1 }}>
-              <IconButton onClick={() => Router.push(`/admin/users/${selected}`)}>
+              <IconButton onClick={() => Router.push(`/admin/addresses/${selected}`)}>
                 <FaPencilAlt size="20" />
               </IconButton>
             </Tooltip>

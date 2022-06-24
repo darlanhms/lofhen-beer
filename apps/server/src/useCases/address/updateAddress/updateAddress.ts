@@ -9,7 +9,6 @@ import IAddressRepository from '@repositories/IAddressRepository';
 interface UpdateAddressRequest {
   id: string;
   alias?: string;
-  customerId?: string | null;
   link?: string | null;
   neighborhood?: string | null;
   street?: string | null;
