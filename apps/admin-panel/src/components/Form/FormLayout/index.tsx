@@ -39,7 +39,7 @@ const FormLayout: React.FC<FormLayoutProps> = ({ children, title, subtitle, onBa
 
   return (
     <Container maxWidth="xl">
-      <Card sx={{ padding: '30px' }}>
+      <Card sx={{ padding: '15px' }}>
         <Box sx={{ flexGrow: 1, mb: 2 }}>{componentsToRender}</Box>
         {children}
       </Card>
