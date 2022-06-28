@@ -1,7 +1,12 @@
 import { CustomerDTO } from '@lofhen/types';
-import { Customer } from '@prisma/client';
+import { Address, Customer as PrismaCustomer } from '@prisma/client';
 import Mapper from '@core/Mapper';
 import CustomerEntity from '@entities/customer';
+import AddressMapper from './addressMapper';
+
+interface Customer extends PrismaCustomer {
+  addresses?: Array<Address>;
+}
 
 class CustomerMapperBase extends Mapper<CustomerEntity, Customer, CustomerDTO> {
   toEntity(persisted: Customer): CustomerEntity {
@@ -14,6 +19,7 @@ class CustomerMapperBase extends Mapper<CustomerEntity, Customer, CustomerDTO> {
         createdBy: persisted.createdBy,
         createdAt: persisted.createdAt,
         enabled: persisted.enabled,
+        addresses: persisted.addresses?.map(AddressMapper.toEntity) || [],
       },
       persisted.id,
     );
@@ -29,6 +35,7 @@ class CustomerMapperBase extends Mapper<CustomerEntity, Customer, CustomerDTO> {
       createdBy: entity.createdBy,
       createdAt: entity.createdAt,
       enabled: entity.enabled,
+      addresses: entity.addresses.map(AddressMapper.toPersistence),
     };
   }
 
@@ -42,6 +49,7 @@ class CustomerMapperBase extends Mapper<CustomerEntity, Customer, CustomerDTO> {
       createdAt: entity.createdAt,
       createdBy: entity.createdBy,
       enabled: entity.enabled,
+      addresses: AddressMapper.toDTOs(entity.addresses),
     };
   }
 }

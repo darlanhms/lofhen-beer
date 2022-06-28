@@ -1,6 +1,7 @@
 import { onlyNumbers } from '@lofhen/utils';
 import { IsDate, IsNotEmpty, IsOptional, Length } from 'class-validator';
 import Entity from '@core/Entity';
+import AddressEntity from './address';
 
 interface CustomerProps {
   name: string;
@@ -10,6 +11,7 @@ interface CustomerProps {
   createdBy: string;
   createdAt?: Date;
   enabled?: boolean;
+  addresses: AddressEntity[];
 }
 
 export default class CustomerEntity extends Entity<CustomerProps> {
@@ -32,6 +34,8 @@ export default class CustomerEntity extends Entity<CustomerProps> {
   enabled: boolean;
 
   createdAt: Date;
+
+  addresses: AddressEntity[];
 
   private normalize(): void {
     if (this.birthdate) {

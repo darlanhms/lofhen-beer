@@ -1,3 +1,5 @@
+import { AddressDTO } from './address';
+
 export interface CustomerDTO {
   id: string;
   name: string;
@@ -7,4 +9,5 @@ export interface CustomerDTO {
   createdAt: Date;
   enabled: boolean;
   createdBy: string;
+  addresses: AddressDTO[];
 }

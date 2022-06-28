@@ -11,8 +11,27 @@ export default class CustomerRepository implements ICustomerRepository {
       where: {
         id: customerToPersist.id,
       },
-      create: customerToPersist,
-      update: customerToPersist,
+      create: {
+        ...customerToPersist,
+        addresses: {
+          createMany: {
+            data: customerToPersist.addresses || [],
+          },
+        },
+      },
+      update: {
+        ...customerToPersist,
+        addresses: {
+          upsert:
+            customerToPersist.addresses?.map(address => ({
+              where: {
+                id: address.id,
+              },
+              create: address,
+              update: address,
+            })) || [],
+        },
+      },
     });
 
     return CustomerMapper.toEntity(persisted);
