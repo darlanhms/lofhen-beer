@@ -16,7 +16,6 @@ interface CreateAddressRequest {
   number: string | null;
   reference: string | null;
   complement: string | null;
-  enabled?: boolean;
 }
 
 @injectable()

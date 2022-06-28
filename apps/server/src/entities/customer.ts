@@ -1,5 +1,6 @@
-import { onlyNumbers } from '@lofhen/utils';
-import { IsDate, IsNotEmpty, IsOptional, Length } from 'class-validator';
+import { filledArray, onlyNumbers } from '@lofhen/utils';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsOptional, Length, ValidateNested } from 'class-validator';
 import Entity from '@core/Entity';
 import AddressEntity from './address';
 
@@ -35,6 +36,9 @@ export default class CustomerEntity extends Entity<CustomerProps> {
 
   createdAt: Date;
 
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => AddressEntity)
   addresses: AddressEntity[];
 
   private normalize(): void {
@@ -52,6 +56,13 @@ export default class CustomerEntity extends Entity<CustomerProps> {
 
     if (!this.enabled) {
       this.enabled = true;
+    }
+
+    if (filledArray(this.addresses)) {
+      this.addresses.map(address => ({
+        ...address,
+        customerId: this.id,
+      }));
     }
   }
 

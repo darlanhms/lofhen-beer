@@ -15,7 +15,11 @@ export default class CustomerRepository implements ICustomerRepository {
         ...customerToPersist,
         addresses: {
           createMany: {
-            data: customerToPersist.addresses || [],
+            data:
+              customerToPersist.addresses?.map(address => ({
+                ...address,
+                customerId: undefined,
+              })) || [],
           },
         },
       },
@@ -27,8 +31,14 @@ export default class CustomerRepository implements ICustomerRepository {
               where: {
                 id: address.id,
               },
-              create: address,
-              update: address,
+              create: {
+                ...address,
+                customerId: undefined,
+              },
+              update: {
+                ...address,
+                customerId: undefined,
+              },
             })) || [],
         },
       },
