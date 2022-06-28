@@ -50,13 +50,14 @@ model City {
 model Customer {
   id          String    @id @default(uuid()) @db.Uuid
   name        String    @db.VarChar(255)
-  birthdate   String?   @db.VarChar(50)
+  birthdate   DateTime? @db.Date
   phone       String?   @db.VarChar(50)
   observation String?   @db.VarChar(500)
   createdAt   DateTime  @default(now()) @map("created_at")
   createdBy   String    @map("created_by") @db.Uuid
   user        User      @relation(fields: [createdBy], references: [id])
   addresses   Address[]
+  enabled     Boolean   @default(true) @db.Boolean
 
   @@map("customer")
 }
@@ -64,9 +65,9 @@ model Customer {
 model Address {
   id           String    @id @default(uuid()) @db.Uuid
   alias        String    @db.VarChar(255)
-  cityId       String    @db.Uuid
+  cityId       String    @db.Uuid @map("city_id")
   city         City      @relation(fields: [cityId], references: [id])
-  customerId   String?   @db.Uuid
+  customerId   String?   @db.Uuid  @map("customer_id")
   customer     Customer? @relation(fields: [customerId], references: [id])
   link         String?   @db.Text
   neighborhood String?   @db.VarChar(255)
@@ -74,7 +75,7 @@ model Address {
   number       String?   @db.VarChar(50)
   complement   String?   @db.VarChar(511)
   reference    String?   @db.VarChar(511)
-  enabled      Boolean   @db.Boolean @default(true)
+  enabled      Boolean   @default(true) @db.Boolean
 
   @@map("address")
 }
