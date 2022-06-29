@@ -52,6 +52,9 @@ export default class CustomerRepository implements ICustomerRepository {
       where: {
         id,
       },
+      include: {
+        addresses: true,
+      },
     });
 
     return CustomerMapper.toEntityOrNull(customer);

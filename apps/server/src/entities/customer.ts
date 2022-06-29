@@ -15,6 +15,8 @@ interface CustomerProps {
   addresses: AddressEntity[];
 }
 
+type UpdateTableProps = Pick<CustomerProps, 'name' | 'birthdate' | 'phone' | 'observation' | 'enabled'>;
+
 export default class CustomerEntity extends Entity<CustomerProps> {
   @IsNotEmpty({ message: 'Nome é obrigatório' })
   name: string;
@@ -70,5 +72,27 @@ export default class CustomerEntity extends Entity<CustomerProps> {
     super(props, id);
 
     this.normalize();
+  }
+
+  update(props: Partial<UpdateTableProps>): void {
+    if (props.name) {
+      this.name = props.name;
+    }
+
+    if (props.phone || props.phone === null) {
+      this.phone = props.phone;
+    }
+
+    if (props.birthdate || props.birthdate === null) {
+      this.birthdate = props.birthdate;
+    }
+
+    if (props.observation || props.observation === null) {
+      this.observation = props.observation;
+    }
+
+    if (props.enabled || props.enabled === false) {
+      this.enabled = props.enabled;
+    }
   }
 }
