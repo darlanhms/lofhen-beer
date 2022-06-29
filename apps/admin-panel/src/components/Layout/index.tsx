@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IconType } from 'react-icons';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { BsFillPeopleFill } from 'react-icons/bs';
 import { FaChevronDown, FaChevronRight, FaHome, FaUser, FaMapMarkedAlt } from 'react-icons/fa';
 import { HiChevronRight } from 'react-icons/hi';
 import { isMobile } from '@lofhen/utils';
@@ -64,6 +65,11 @@ const routes: Array<IRoute> = [
     Icon: FaHome,
   },
   {
+    path: '/admin/customers',
+    label: 'Clientes',
+    Icon: BsFillPeopleFill,
+  },
+  {
     label: 'Endereços',
     Icon: FaMapMarkedAlt,
     routes: [
@@ -102,7 +108,7 @@ const SingleRoute = ({ route: { path, label, Icon }, isSubRoute }: SingleRoutePr
   }, []);
 
   return (
-    <Link key={path} href={path} onClick={handleClickLink}>
+    <Link key={path} href={path} onClick={handleClickLink} style={{ textDecoration: 'none' }}>
       <DrawerOption sx={{ ...(isSubRoute ? { pl: 4 } : {}) }} selected={pathname === path}>
         <ListItemIcon>
           <Icon color="white" size="20" />

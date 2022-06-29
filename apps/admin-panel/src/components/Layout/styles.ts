@@ -17,6 +17,7 @@ export const DrawerContentBox = styled(Box)({
 
 export const DrawerOption = styled(ListItemButton)(({ theme }) => ({
   color: theme.palette.common.white,
+  textDecoration: 'none',
   '& .MuiListItemIcon-root': {
     minWidth: 40,
     marginBottom: 3,
@@ -54,6 +55,7 @@ export const NavBar = styled(AppBar)(({ theme }) => ({
 export const UserIconButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: theme.palette.grey[300],
   color: theme.palette.grey[600],
+  textDecoration: 'none',
   padding: 9,
   ':hover': {
     backgroundColor: theme.palette.grey[200],

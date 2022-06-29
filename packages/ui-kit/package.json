@@ -16,7 +16,8 @@
     "copyfiles": "^2.4.1",
     "dot-object": "^2.1.4",
     "notistack": "^2.0.5",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-number-format": "^4.9.3"
   },
   "peerDependencies": {
     "@emotion/react": "^11.9.3",
