@@ -9,5 +9,5 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.d.ts"
-  ]
+, "../utils/src/string/applyStringMask.ts"  ]
 }

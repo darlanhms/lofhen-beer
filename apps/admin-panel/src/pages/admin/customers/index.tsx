@@ -1,10 +1,13 @@
+import { useMemo } from 'react';
 import Router from 'next/router';
 import { FaPlus, FaPencilAlt, FaSearch } from 'react-icons/fa';
 import { DataTable, FlexAlignRight, Input, useArrayQuery, useTableSelection } from '@lofhen/ui-kit';
+import { applyPhoneMask } from '@lofhen/utils';
 import { Button, Container, IconButton, Tooltip } from '@mui/material';
 import HeaderTitle from 'components/HeaderTitle';
 import Layout from 'components/Layout';
 import PageMetadata from 'components/PageMetadata';
+import { format } from 'date-fns';
 import useCustomers from 'lib/customer/useCustomers';
 import { CustomPage } from 'types/customPage';
 
@@ -13,7 +16,15 @@ const CustomersPage: CustomPage = () => {
 
   const { data = [] } = useCustomers();
 
-  const [filteredCustomers, handleSearch] = useArrayQuery(data, ['name', 'phone', 'birthdate']);
+  const formattedCustomers = useMemo(() => {
+    return data.map(customer => ({
+      ...customer,
+      birthdate: customer.birthdate ? format(new Date(customer.birthdate), 'dd/MM') : '',
+      phone: customer.phone ? applyPhoneMask(customer.phone) : '',
+    }));
+  }, [data]);
+
+  const [filteredCustomers, handleSearch] = useArrayQuery(formattedCustomers, ['name', 'phone', 'birthdate']);
 
   return (
     <Container maxWidth="xl">
@@ -37,7 +48,7 @@ const CustomersPage: CustomPage = () => {
             prop: 'phone',
           },
           {
-            label: 'Aniv.',
+            label: 'Aniversário.',
             prop: 'birthdate',
           },
         ]}
@@ -54,7 +65,7 @@ const CustomersPage: CustomPage = () => {
         headerToolbar={
           <FlexAlignRight>
             <Input
-              placeholder="Pesquisar"
+              placeholder="Pesquisar..."
               sx={{ mt: 2 }}
               onChange={e => handleSearch(e.target.value)}
               adornmentIcon={<FaSearch size={18} />}

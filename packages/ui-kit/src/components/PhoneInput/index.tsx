@@ -1,5 +1,5 @@
 import React from 'react';
-import applyStringMask from '../../utils/applyStringMask';
+import { applyStringMask } from '@lofhen/utils';
 import { InputMask, InputMaskProps } from '../InputMask';
 
 export type PhoneInputProps = Omit<InputMaskProps, 'format'>;

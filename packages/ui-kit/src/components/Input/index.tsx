@@ -8,12 +8,20 @@ interface SpecificProps {
   errorMessage?: string;
   adornmentPosition?: AdornmentPositions;
   adornmentIcon?: React.ReactNode;
+  onClickAdornment?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 export type InputProps = SpecificProps & TextFieldProps;
 
 export const Input = React.forwardRef(
-  ({ errorMessage, type, adornmentPosition, adornmentIcon, ...rest }: InputProps): React.ReactElement => {
+  ({
+    errorMessage,
+    type,
+    adornmentPosition,
+    adornmentIcon,
+    onClickAdornment,
+    ...rest
+  }: InputProps): React.ReactElement => {
     const [showPassword, setShowPassword] = useState(false);
 
     const passwordInputType = showPassword ? 'text' : 'password';
@@ -43,13 +51,13 @@ export const Input = React.forwardRef(
       if (adornmentPosition === 'end') {
         adornment = (
           <InputAdornment position={adornmentPosition}>
-            <IconButton>{adornmentIcon}</IconButton>
+            <IconButton onClick={onClickAdornment}>{adornmentIcon}</IconButton>
           </InputAdornment>
         );
       } else if (adornmentPosition === 'start') {
         adornment = (
           <InputAdornment position={adornmentPosition} sx={{ marginRight: '10px' }}>
-            {adornmentIcon}
+            <IconButton onClick={onClickAdornment}>{adornmentIcon}</IconButton>
           </InputAdornment>
         );
       }

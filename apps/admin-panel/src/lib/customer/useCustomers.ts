@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from 'react-query';
-import { CityDTO } from '@lofhen/types';
+import { CustomerDTO } from '@lofhen/types';
 import getCustomers from './getCustomers';
 
-export default function useCustomers(): UseQueryResult<CityDTO[], unknown> {
+export default function useCustomers(): UseQueryResult<CustomerDTO[], unknown> {
   return useQuery(['getCustomers'], async () => {
     return getCustomers();
   });

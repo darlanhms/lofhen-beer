@@ -9,7 +9,7 @@ function replaceString(string: string, index: number, replacement: string) {
   return string.substring(0, index) + replacement + string.substring(index + 1);
 }
 
-export default function applyStringMask(string: string, mask: string, maskChar = '_'): string {
+export function applyStringMask(string: string, mask: string, maskChar = '_'): string {
   const trimmedString = string.replace(' ', '');
 
   for (let index = 0; index < trimmedString.length; index++) {
@@ -22,4 +22,11 @@ export default function applyStringMask(string: string, mask: string, maskChar =
   }
 
   return mask;
+}
+
+export function applyPhoneMask(str: string): string {
+  if (str.length <= 10) {
+    return applyStringMask(str, '(__) ____-____');
+  }
+  return applyStringMask(str, '(__) _____-____');
 }
