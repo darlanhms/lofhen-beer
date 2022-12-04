@@ -21,6 +21,10 @@ function makeUserPayload(overrides?: Partial<CreateUserRequest>): CreateUserRequ
 }
 
 describe('Create user procedure', () => {
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
   it('creates a user', async () => {
     const caller = createTestCaller();
 

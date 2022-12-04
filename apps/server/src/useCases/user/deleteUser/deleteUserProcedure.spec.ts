@@ -5,15 +5,13 @@
 import { UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
 import { Role } from '@prisma/client';
-import { StatusCodes } from 'http-status-codes';
-import request from 'supertest';
-import app from '@infra/http/app';
+import { createTestCaller } from '@core/tests/trpc';
 import prisma from '@infra/prisma/client';
 
 const createUser = async (): Promise<UserDTO> => {
-  const cookies = await authenticate();
+  const caller = createTestCaller();
 
-  const { body: user } = await request(app).post('/api/users').set('Cookie', cookies).send({
+  const user = await caller.user.create({
     name: faker.name.findName(),
     username: faker.internet.userName(),
     password: faker.internet.password(),
@@ -29,11 +27,11 @@ describe('Delete user', () => {
   });
 
   it('deletes a user', async () => {
-    const cookies = await authenticate();
+    const caller = createTestCaller();
 
     const user = await createUser();
 
-    const response = await request(app).delete(`/api/users/${user.id}`).set('Cookie', cookies);
+    await caller.user.delete(user.id);
 
     const softDeletedUser = await prisma.user.findFirst({
       where: {
@@ -42,7 +40,6 @@ describe('Delete user', () => {
       },
     });
 
-    expect(response.status).toBe(StatusCodes.OK);
     expect(softDeletedUser?.deleted).toBeTruthy();
   });
 });

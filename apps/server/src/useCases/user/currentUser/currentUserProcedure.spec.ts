@@ -8,6 +8,10 @@ import { createTestCaller } from '@core/tests/trpc';
 import prisma from '@infra/prisma/client';
 
 describe('Current user controller', () => {
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
   it('returns the current user when logged in', async () => {
     const userInDb = await prisma.user.create({
       data: {
