@@ -1,0 +1,19 @@
+{
+  "name": "@lofhen/contracts",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "devDependencies": {
+    "@lofhen/types": "*"
+  },
+  "dependencies": {
+    "dot-object": "^2.1.4",
+    "zod": "^3.19.1"
+  }
+}

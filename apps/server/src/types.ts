@@ -1,1 +1,1 @@
-export * from './infra/http/_routes';
+export * from './infra/trpc/routes';

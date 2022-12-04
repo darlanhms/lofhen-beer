@@ -1,10 +1,10 @@
-import { StatusCodes } from 'http-status-codes';
-import ApplicationError from './applicationError';
+import { TRPCError } from '@trpc/server';
 
-export default class NotAuthorizedError extends ApplicationError {
-  status = StatusCodes.UNAUTHORIZED;
-
+export default class NotAuthorizedError extends TRPCError {
   constructor() {
-    super('Não autorizado a realizar a operação');
+    super({
+      code: 'UNAUTHORIZED',
+      message: 'Não autorizado a realizar a operação',
+    });
   }
 }

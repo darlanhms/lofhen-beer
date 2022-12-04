@@ -1,5 +1,5 @@
+import { CreateUserRequest } from '@lofhen/contracts';
 import { filledArray } from '@lofhen/utils';
-import { Role } from '@prisma/client';
 import { validate } from 'class-validator';
 import { inject, injectable } from 'tsyringe';
 import BadRequestError from '@core/errors/badRequestError';
@@ -7,13 +7,6 @@ import ValidationError from '@core/errors/validationError';
 import UseCase from '@core/UseCase';
 import UserEntity from '@entities/user';
 import IUserRepository from '@repositories/IUserRepository';
-
-export interface CreateUserRequest {
-  name: string;
-  username: string;
-  password: string;
-  role: Role;
-}
 
 @injectable()
 export default class CreateUser implements UseCase<CreateUserRequest, UserEntity> {

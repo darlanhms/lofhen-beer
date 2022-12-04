@@ -1,10 +1,10 @@
-import { StatusCodes } from 'http-status-codes';
-import ApplicationError from './applicationError';
+import { TRPCError } from '@trpc/server';
 
-export default class NotFoundError extends ApplicationError {
-  status = StatusCodes.NOT_FOUND;
-
+export default class NotFoundError extends TRPCError {
   constructor(message: string) {
-    super(message);
+    super({
+      code: 'NOT_FOUND',
+      message,
+    });
   }
 }

@@ -5,8 +5,8 @@ import express from 'express';
 
 import '@infra/prisma/middlewares';
 import '@infra/containers';
-import appRouter from './_routes';
-import createContext from './context';
+import createContext from '../trpc/context';
+import appRouter from '../trpc/routes';
 
 const app = express();
 

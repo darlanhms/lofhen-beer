@@ -6,6 +6,6 @@ module.exports = {
     "/node_modules/"
   ],
   testRegex: '.(spec|test).(ts|tsx)$',
-  transform: {'^.+\.(ts|tsx)$': '@swc/jest'},
+  transform: {'^.+\.(ts|tsx)$': 'ts-jest'},
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 }

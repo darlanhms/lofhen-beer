@@ -1,3 +1,4 @@
+import { LoginRequest } from '@lofhen/contracts';
 import { inject, injectable } from 'tsyringe';
 import BadRequestError from '@core/errors/badRequestError';
 import UseCase from '@core/UseCase';
@@ -5,7 +6,6 @@ import UserEntity from '@entities/user';
 import UserMapper from '@mappers/userMapper';
 import ITokenProvider from '@providers/TokenProvider/ITokenProvider';
 import IUserRepository from '@repositories/IUserRepository';
-import { LoginRequest } from './loginSchema';
 
 export interface LoginResponse {
   user: UserEntity;
