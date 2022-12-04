@@ -5,13 +5,9 @@ import UserEntity from '@entities/user';
 import UserMapper from '@mappers/userMapper';
 import ITokenProvider from '@providers/TokenProvider/ITokenProvider';
 import IUserRepository from '@repositories/IUserRepository';
+import { LoginRequest } from './loginSchema';
 
-interface LoginRequest {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
+export interface LoginResponse {
   user: UserEntity;
   jwt: string;
 }

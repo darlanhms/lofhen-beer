@@ -1,10 +1,13 @@
+import { TRPCError } from '@trpc/server';
 import { StatusCodes } from 'http-status-codes';
-import ApplicationError from './applicationError';
 
-export default class BadRequestError extends ApplicationError {
+export default class BadRequestError extends TRPCError {
   status = StatusCodes.BAD_REQUEST;
 
   constructor(message: string) {
-    super(message);
+    super({
+      code: 'BAD_REQUEST',
+      message,
+    });
   }
 }

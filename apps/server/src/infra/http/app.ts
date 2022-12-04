@@ -1,54 +1,24 @@
 import os from 'os';
-import bodyParser from 'body-parser';
-import cookieSession from 'cookie-session';
+import * as trpcExpress from '@trpc/server/adapters/express';
 import cors from 'cors';
 import express from 'express';
-import getLocalNetworkAddresses from '@core/utils/getLocalNetworkAddresses';
-import { errorHandler } from '@infra/http/middlewares/errorHandler';
-import router from '@infra/http/routes';
 
 import '@infra/prisma/middlewares';
 import '@infra/containers';
+import appRouter from './_routes';
+import createContext from './context';
 
 const app = express();
 
-app.set('trust proxy', true);
-
-const whitelist = [
-  'https://lofhen-local.com:3001',
-  'https://192.168.2.54:3001',
-  ...getLocalNetworkAddresses().map(address => `https://${address}:3001`),
-];
-
-app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) {
-        callback(null, true);
-        return;
-      }
-
-      if (whitelist.indexOf(origin as string) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 app.use(
-  cookieSession({
-    signed: false,
-    sameSite: 'none',
-    secure: process.env.NODE_ENV !== 'test',
-    httpOnly: false,
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
   }),
 );
-
-app.use('/api', router);
 
 app.get('/', (req, res) => {
   return res.json({
@@ -58,7 +28,5 @@ app.get('/', (req, res) => {
     appVersion: process.env.npm_package_version,
   });
 });
-
-app.use(errorHandler);
 
 export default app;

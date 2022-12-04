@@ -1,11 +1,14 @@
 {
-  "name": "server",
+  "name": "@lofhen/server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/types.js",
+  "types": "dist/types.d.ts",
+  "source": "src/types.ts",
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config --respawn --transpile-only --ignore-watch node_modules --no-notify --poll src/index.ts",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "up:db": "docker compose -f ./docker-compose.db.yml up -d",
     "migrate:dev": "prisma migrate dev",
     "seed": "prisma db seed",
     "studio": "prisma studio",
@@ -21,6 +24,7 @@
     "@lofhen/types": "*",
     "@lofhen/utils": "*",
     "@prisma/client": "^3.15.1",
+    "@trpc/server": "^10.4.3",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "class-transformer": "^0.5.1",
@@ -34,7 +38,8 @@
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@pedidos10/tscpaths": "^0.0.2",

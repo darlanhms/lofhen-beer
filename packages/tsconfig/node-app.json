@@ -8,7 +8,6 @@
       "es6"
     ],
     "isolatedModules": false,
-    "declaration": false,
     "strictPropertyInitialization": false,
     "target": "es6",
     "module": "commonjs"
