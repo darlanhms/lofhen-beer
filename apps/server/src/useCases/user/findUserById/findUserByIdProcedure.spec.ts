@@ -5,6 +5,7 @@
 import { Role, UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
 import { createTestCaller } from '@core/tests/trpc';
+import prisma from '@infra/prisma/client';
 
 const createUser = async (): Promise<UserDTO> => {
   const caller = createTestCaller();
@@ -19,7 +20,11 @@ const createUser = async (): Promise<UserDTO> => {
   return user;
 };
 
-describe('Find user by id controller', () => {
+describe('Find user by id', () => {
+  afterAll(async () => {
+    await prisma.$disconnect();
+  });
+
   it('finds a user by id', async () => {
     const caller = createTestCaller();
 

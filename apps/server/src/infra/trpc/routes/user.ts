@@ -4,6 +4,7 @@ import deleteUserProcedure from '@useCases/user/deleteUser/deleteUserProcedure';
 import findAllUsersProcedure from '@useCases/user/findAllUsers/findAllUsersProcedure';
 import findUserByIdProcedure from '@useCases/user/findUserById/findUserByIdProcedure';
 import loginProcedure from '@useCases/user/login/loginProcedure';
+import updateUserProcedure from '@useCases/user/updateUser/updateUserProcedure';
 import { router } from '../index';
 
 const userRouter = router({
@@ -13,6 +14,7 @@ const userRouter = router({
   delete: deleteUserProcedure,
   list: findAllUsersProcedure,
   byId: findUserByIdProcedure,
+  update: updateUserProcedure,
 });
 
 export default userRouter;

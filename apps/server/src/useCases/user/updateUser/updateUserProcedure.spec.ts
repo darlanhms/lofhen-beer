@@ -6,15 +6,13 @@ import { UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
 
 import { Role } from '@prisma/client';
-import { StatusCodes } from 'http-status-codes';
-import request from 'supertest';
-import app from '@infra/http/app';
+import { createTestCaller } from '@core/tests/trpc';
 import prisma from '@infra/prisma/client';
 
 const createUser = async (): Promise<UserDTO> => {
-  const cookies = await authenticate();
+  const caller = createTestCaller();
 
-  const { body: user } = await request(app).post('/api/users').set('Cookie', cookies).send({
+  const user = await caller.user.create({
     name: faker.name.findName(),
     username: faker.internet.userName(),
     password: faker.internet.password(),
@@ -30,13 +28,21 @@ describe('Update user controller', () => {
   });
 
   it('updates a user', async () => {
-    const cookies = await authenticate();
+    const caller = createTestCaller();
 
     const user = await createUser();
 
-    const response = await request(app).put(`/api/users/${user.id}`).set('Cookie', cookies).send({
+    const oldUser = await prisma.user.findFirst({
+      where: {
+        id: user.id,
+      },
+    });
+
+    await caller.user.update({
+      id: user.id,
       name: 'new name',
       username: 'new username',
+      password: '1234',
     });
 
     const userInDb = await prisma.user.findUnique({
@@ -45,8 +51,8 @@ describe('Update user controller', () => {
       },
     });
 
-    expect(response.status).toBe(StatusCodes.OK);
     expect(userInDb?.name).toBe('new name');
     expect(userInDb?.username).toBe('new username');
+    expect(userInDb?.password).not.toBe(oldUser?.password);
   });
 });

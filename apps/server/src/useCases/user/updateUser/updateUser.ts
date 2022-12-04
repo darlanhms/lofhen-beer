@@ -1,13 +1,10 @@
+import { UpdateUserRequest } from '@lofhen/contracts';
+import { filledArray } from '@lofhen/utils';
+import { validate } from 'class-validator';
 import { inject, injectable } from 'tsyringe';
+import ValidationError from '@core/errors/validationError';
 import UseCase from '@core/UseCase';
 import IUserRepository from '@repositories/IUserRepository';
-
-interface UpdateUserRequest {
-  id: string;
-  name?: string;
-  username?: string;
-  password?: string;
-}
 
 @injectable()
 export default class UpdateUser implements UseCase<UpdateUserRequest, void> {
@@ -28,6 +25,12 @@ export default class UpdateUser implements UseCase<UpdateUserRequest, void> {
       username: request.username,
       password: request.password,
     });
+
+    const errors = await validate(user);
+
+    if (filledArray(errors)) {
+      throw new ValidationError(errors);
+    }
 
     await this.userRepo.save(user);
   }
