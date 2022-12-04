@@ -4,14 +4,12 @@
 
 import { Role, UserDTO } from '@lofhen/types';
 import { faker } from '@faker-js/faker';
-import { StatusCodes } from 'http-status-codes';
-import request from 'supertest';
-import app from '@infra/http/app';
+import { createTestCaller } from '@core/tests/trpc';
 
 const createUser = async (): Promise<UserDTO> => {
-  const cookies = await authenticate();
+  const caller = createTestCaller();
 
-  const { body: user } = await request(app).post('/api/users').set('Cookie', cookies).send({
+  const user = caller.user.create({
     name: faker.name.findName(),
     username: faker.internet.userName(),
     password: faker.internet.password(),
@@ -23,13 +21,12 @@ const createUser = async (): Promise<UserDTO> => {
 
 describe('Find user by id controller', () => {
   it('finds a user by id', async () => {
-    const cookies = await authenticate();
+    const caller = createTestCaller();
 
     const user = await createUser();
 
-    const response = await request(app).get(`/api/users/${user.id}`).set('Cookie', cookies).send();
+    const foundUser = await caller.user.byId(user.id);
 
-    expect(response.status).toBe(StatusCodes.OK);
-    expect(response.body).toStrictEqual(user);
+    expect(foundUser).toStrictEqual(user);
   });
 });
