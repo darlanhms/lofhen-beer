@@ -64,6 +64,7 @@ module.exports = {
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'no-nested-ternary': 'off',
+    'react/react-in-jsx-scope': 'off',
     camelcase: 'off',
     'import/order': [
       'error',
